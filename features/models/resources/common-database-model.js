@@ -12,7 +12,10 @@ module.exports = function() {
         server: {
           socketOptions: {
             keepAlive: 1
-          }
+          },
+
+          // MongDB max connections: 20 - Mongoose monitor 1 = 19
+          poolSize: 19
         }
       }
     );
