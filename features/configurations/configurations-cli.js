@@ -48,14 +48,14 @@ module.exports = {
   install: [{
     type: 'input',
     name: 'title',
-    message: 'Real app name:',
+    message: 'Real plateform name:',
     validate: function(value) {
       return !value ? 'Please give a name.' : true;
     }
   }, {
     type: 'input',
     name: 'name',
-    message: 'App code name (lower alphanumerics):',
+    message: 'Plateform code name (lower alphanumerics):',
     validate: function(value) {
       if (value && value.match(/^[a-z]+[a-z0-9-]*$/)) {
         return true;
