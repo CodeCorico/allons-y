@@ -4,7 +4,7 @@ module.exports = function() {
   var isNode = typeof module != 'undefined' && typeof module.exports != 'undefined',
       events = isNode ? require('events-manager').EventsManager : window.EventsManager;
 
-  DependencyInjection.model('$AbstractService', [function() {
+  DependencyInjection.service('$AbstractService', [function() {
 
     return function AbstractService() {
 
