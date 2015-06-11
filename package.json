@@ -1,6 +1,6 @@
 {
   "name": "allons-y",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Allons-y! is a webapps plateform installer that come from a S.F. movie.",
   "main": "features/cli/cli.js",
   "scripts": {
