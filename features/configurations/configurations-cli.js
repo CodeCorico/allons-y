@@ -25,7 +25,7 @@ function beforeInstall(config, utils, next) {
 
   var source = path.resolve(__dirname, 'resources');
 
-  utils.copy(path.join(source, '.gitignore'), path.resolve(utils.path, '.gitignore'));
+  utils.copy(path.join(source, 'ignore'), path.resolve(utils.path, '.gitignore'));
   utils.copy(path.join(source, 'start.js'), path.resolve(utils.path, 'start.js'));
 
   if (!fs.existsSync(path.resolve(utils.path, 'README.md'))) {
