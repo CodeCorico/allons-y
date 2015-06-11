@@ -8,7 +8,13 @@ module.exports = function() {
       'mongodb://' +
       (process.env.DATABASE_USER ? process.env.DATABASE_USER + ':' + process.env.DATABASE_PASSWORD + '@' : '') +
       process.env.DATABASE_HOST +
-      '/' + process.env.DATABASE_NAME
+      '/' + process.env.DATABASE_NAME, {
+        server: {
+          socketOptions: {
+            keepAlive: 1
+          }
+        }
+      }
     );
 
     return mongoose;
