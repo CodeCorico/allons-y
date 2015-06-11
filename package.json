@@ -19,8 +19,9 @@
   ],
   "author": "CodeCorico <hello@codecorico.com>",
   "bin": {
-    "allons-y": "./features/cli/cli.js"
+    "allons-y": "features/cli/cli"
   },
+  "preferGlobal": true,
   "bugs": {
     "url": "https://github.com/CodeCorico/allons-y/issues"
   },
