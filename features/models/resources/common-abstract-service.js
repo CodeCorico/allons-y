@@ -14,11 +14,15 @@ module.exports = function() {
         return isNode;
       };
 
-      var _initFuncs = [];
 
-      function _fireInit(callback) {
+      var _this = this,
+          _init = false,
+          _allInitFuncs = [],
+          _initFuncs = [];
+
+      function _fireInit(args, callback) {
         for (var i = _initFuncs.length - 1; i >= 0; i--) {
-          _initFuncs[i]();
+          _initFuncs[i](args);
           _initFuncs.splice(i, 1);
         }
 
@@ -27,18 +31,53 @@ module.exports = function() {
         }
       }
 
-      this.init = function(func) {
+      this.isInit = function() {
+        return _init;
+      };
+
+      this.init = function(funcOrArgs) {
+        _init = true;
+
         return new window.Ractive.Promise(function(fulfil) {
-          if (func) {
-            _initFuncs.push(func);
+          if (typeof funcOrArgs == 'function') {
+            _initFuncs.push(funcOrArgs);
+            _allInitFuncs.push(funcOrArgs);
 
             return fulfil(true);
           }
 
-          _fireInit(fulfil);
+          _fireInit(funcOrArgs, fulfil);
         });
       };
 
+      function _tearDown(callback) {
+        _this.fire('teardown');
+        _initFuncs = $.extend(true, [], _allInitFuncs);
+
+        if (callback) {
+          callback();
+        }
+      }
+
+      this.teardown = function(callback) {
+        _init = false;
+
+        var beforeTeardowns = _this.fire('beforeTeardown');
+
+        if (beforeTeardowns && beforeTeardowns.length) {
+          window.async.eachSeries(beforeTeardowns, function(beforeTeardown, next) {
+            beforeTeardown(next);
+          },
+
+          function() {
+            _tearDown(callback);
+          });
+
+          return;
+        }
+
+        _tearDown(callback);
+      };
     };
   }]);
 
