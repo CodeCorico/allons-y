@@ -18,7 +18,8 @@ module.exports = function() {
       var _this = this,
           _init = false,
           _allInitFuncs = [],
-          _initFuncs = [];
+          _initFuncs = [],
+          _config = {};
 
       function _fireInit(args, callback) {
         for (var i = _initFuncs.length - 1; i >= 0; i--) {
@@ -77,6 +78,22 @@ module.exports = function() {
         }
 
         _tearDown(callback);
+      };
+
+      this.config = function(name, value) {
+        if (typeof name == 'undefined') {
+          return _config;
+        }
+
+        if (typeof value != 'undefined') {
+          _config[name] = value;
+
+          this.fire(name + 'ConfigChanged', {
+            value: value
+          });
+        }
+
+        return _config[name];
       };
     };
   }]);
