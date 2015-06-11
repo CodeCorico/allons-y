@@ -14,8 +14,12 @@ module.exports = function() {
         return isNode;
       };
 
+      var _RETRY_TIME = {
+            INCREMENT: 1000,
+            MAX: 3000
+          },
 
-      var _this = this,
+          _this = this,
           _init = false,
           _allInitFuncs = [],
           _initFuncs = [],
@@ -95,6 +99,54 @@ module.exports = function() {
 
         return _config[name];
       };
+
+      function _retryEmit(returnArgs, $socket, event, args, filterFunc, useFilterFunc) {
+        useFilterFunc = typeof useFilterFunc == 'undefined' ? true : useFilterFunc;
+
+        if (!returnArgs.error) {
+          return;
+        }
+
+        returnArgs._message = returnArgs._message || {};
+        returnArgs._message._tries = (returnArgs._message._tries || 0) + 1;
+
+        if (!useFilterFunc || (filterFunc ? filterFunc(returnArgs) : true)) {
+          args._tries = returnArgs._message._tries;
+
+          setTimeout(function() {
+            _this.retryEmitOnError($socket, event, args, filterFunc);
+          }, Math.min(_RETRY_TIME.MAX, returnArgs._message._tries * _RETRY_TIME.INCREMENT));
+        }
+      }
+
+      this.retryEmitOnError = function($socket, event, args, filterFunc) {
+        var returnMessage = 'read(' + event.split('(')[1];
+
+        if (!$socket.connected) {
+          var returnArgs = {
+            error: 'Server disconnected',
+            _message: $.extend(true, {}, args)
+          };
+
+          _retryEmit(returnArgs, $socket, event, args, filterFunc, false);
+
+          var callbacks = $socket._callbacks[returnMessage];
+          if (callbacks) {
+            $.each(callbacks, function(i, callback) {
+              callback(returnArgs);
+            });
+          }
+
+          return;
+        }
+
+        $socket.once(returnMessage, function(returnArgs) {
+          _retryEmit(returnArgs, $socket, event, args, filterFunc);
+        });
+
+        $socket.emit(event, args);
+      };
+
     };
   }]);
 
