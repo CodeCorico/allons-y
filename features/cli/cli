@@ -226,7 +226,7 @@ if (program.init || program.update) {
 
           utils.log('[OK]');
 
-          utils.title('Your app "' + config.install.name + '" is ' + (program.init ? 'ready!\n\n    Now use "allons-y env" to configure you environment.' : 'up to date!'));
+          utils.title('Your plateform "' + config.install.name + '" is ' + (program.init ? 'ready!\n\n    Now use "allons-y env" to configure you environment.' : 'up to date!'));
         });
       });
     });
@@ -281,7 +281,7 @@ if (program.env) {
 
       utils.log('[OK]');
 
-      utils.title('Your app environment is ready!');
+      utils.title('Your plateform environment is ready!');
     });
   });
 
