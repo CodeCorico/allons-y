@@ -1,0 +1,16 @@
+/logs/*
+*.log
+*.node_modules
+*node_modules
+*.DS_Store
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+build/Release
+.lock-wscript
+.env
+public
+pid
+Thumbs.db

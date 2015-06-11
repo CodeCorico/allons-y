@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="/public/{{name}}/{{name}}-start-mask.css">
+  <link type="image/x-icon" rel="icon shortcut" href="/public/{{name}}/favicon.png">
+</head>
+<body>
+
+  <rv-require
+    name="layout"
+    src="/public/vendor/plumes/layout/layout"
+
+    data-bind-onloaded="onloaded"
+    data-bind-brand="brand"
+    data-bind-apps="apps"
+    data-bind-user="user"
+    data-bind-user-toggle="user-toggle"
+  >
+    <rv-partial target="mask-title">
+      {{title}} <span>plateform</span>
+    </rv-partial>
+    <rv-partial target="message-title">
+      {{title}} <span>plateform</span>
+    </rv-partial>
+  </rv-require>
+
+  <div class="start-mask"></div>
+
+  <script type="text/javascript" src="/public/vendor/async.js"></script>
+  <script type="text/javascript" src="/public/vendor/socket.io.js"></script>
+  <script type="text/javascript" src="/public/vendor/events-manager.js"></script>
+  <script type="text/javascript" src="/public/vendor/jquery.js"></script>
+  <script type="text/javascript" src="/public/vendor/ractive.js"></script>
+  <script type="text/javascript" src="/public/vendor/ractive-require.js"></script>
+  <script type="text/javascript" src="/public/vendor/page.js"></script>
+  <script type="text/javascript" src="/public/vendor/plumes/layout/layout-bootstrap.js"></script>
+  <script type="text/javascript" src="/public/vendor/mvc-injection.js"></script>
+  <script type="text/javascript" src="/public/common/common-bootstrap.js"></script>
+  <script type="text/javascript" src="/public/{{name}}/{{name}}-index.js"></script>
+</body>
+</html>
