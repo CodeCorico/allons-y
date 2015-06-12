@@ -17,6 +17,8 @@ module.exports = function modelsDependencies(gulp) {
   gulp.task('modelsDependencies', function(done) {
 
     glob.sync(path.join(modelsPath, filesPattern)).forEach(function(file) {
+      delete require.cache[require.resolve(file)];
+
       var filePathArray = file.split('/'),
           filename = filePathArray.pop(),
           feature = filePathArray.pop() ? filePathArray.pop() : null,
