@@ -45,30 +45,7 @@ module.exports = function modelsDependencies(gulp) {
 
         return filePath.join(path.sep);
       }))
-      .on('end', function() {
-
-        gulp
-          .src(['node_modules/async/lib/async.js'])
-          .pipe(gulp.dest('./public/vendor'))
-          .pipe(sourcemaps.init())
-          .pipe(uglify())
-          .pipe(rename({
-            extname: '.min.js'
-          }))
-          .pipe(sourcemaps.write('./'))
-          .pipe(gulp.dest('./public/vendor'))
-          .on('end', function() {
-
-            gulp.src([
-              'node_modules/events-manager/events-manager.js',
-              'node_modules/events-manager/events-manager.min.js'
-            ])
-              .pipe(gulp.dest('./public/vendor'))
-              .on('end', done);
-
-          });
-
-      });
+      .on('end', done);
   });
 
   return {
