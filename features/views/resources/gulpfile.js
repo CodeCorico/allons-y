@@ -1,6 +1,8 @@
 'use strict';
 
-var fs = require('fs'),
+var PID_FILE = '.gulppid',
+
+    fs = require('fs'),
     dotenv = require('dotenv');
 
 if (!fs.existsSync('.env')) {
@@ -8,6 +10,8 @@ if (!fs.existsSync('.env')) {
 }
 
 dotenv.load();
+
+fs.writeFileSync(PID_FILE, process.pid);
 
 var Plumes = require('plumes'),
     gulp = require('gulp'),
