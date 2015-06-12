@@ -12,5 +12,6 @@ build/Release
 .lock-wscript
 .env
 public
-pid
+.pid
+.gulppid
 Thumbs.db
