@@ -19,7 +19,8 @@ function beforeInstall(config, utils, next) {
     private: config.install.private,
     scripts: {
       prestart: 'npm install',
-      start: 'node start'
+      start: 'node start.js',
+      stop: 'node stop.js'
     }
   }, config.package);
 
