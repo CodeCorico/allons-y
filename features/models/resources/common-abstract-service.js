@@ -55,8 +55,8 @@ module.exports = function() {
         });
       };
 
-      function _tearDown(callback) {
-        _this.fire('teardown');
+      function _tearDown(args, callback) {
+        _this.fire('teardown', args);
         _initFuncs = $.extend(true, [], _allInitFuncs);
 
         if (callback) {
@@ -64,24 +64,24 @@ module.exports = function() {
         }
       }
 
-      this.teardown = function(callback) {
+      this.teardown = function(args, callback) {
         _init = false;
 
-        var beforeTeardowns = _this.fire('beforeTeardown');
+        var beforeTeardowns = _this.fire('beforeTeardown', args);
 
         if (beforeTeardowns && beforeTeardowns.length) {
           window.async.eachSeries(beforeTeardowns, function(beforeTeardown, next) {
-            beforeTeardown(next);
+            beforeTeardown(args, next);
           },
 
           function() {
-            _tearDown(callback);
+            _tearDown(args, callback);
           });
 
           return;
         }
 
-        _tearDown(callback);
+        _tearDown(args, callback);
       };
 
       this.config = function(name, value) {
