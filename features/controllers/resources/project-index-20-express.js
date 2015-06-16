@@ -2,7 +2,7 @@
 
 var path = require('path'),
     fileName = path.basename(__filename),
-    projectName = fileName.split('-')[0];
+    projectName = fileName.replace('-index-20-express.js', '');
 
 module.exports = ['$server', function($server) {
   $server.use(function(req, res) {
