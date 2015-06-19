@@ -29,7 +29,7 @@ function afterInstall(config, utils, next) {
 
   mkdirp.sync(dest + 'versions/0.1');
 
-  utils.copy(path.join(source, 'evolve-version-0.0.1.js'), path.resolve(utils.path, 'versions/0.1/version-0.0.1.js'));
+  utils.copy(path.join(source, 'evolve-version-0.1.0.js'), path.resolve(utils.path, 'versions/0.1/version-0.1.0.js'));
   utils.copy(path.join(source, 'evolve.js'), path.resolve(utils.path, 'evolve.js'));
 
   utils.log('[OK]\n');
