@@ -1,7 +1,7 @@
 module.exports = function() {
   'use strict';
 
-  DependencyInjection.service('$DatabaseService', [function() {
+  DependencyInjection.service('$MongoService', [function() {
     var mongoose = require('mongoose');
 
     mongoose.connect(

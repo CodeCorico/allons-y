@@ -10,13 +10,13 @@ module.exports = function() {
       var model;
 
       if (isNode && nodeConstructor) {
-        var $DatabaseService = DependencyInjection.injector.model.get('$DatabaseService');
+        var $MongoService = DependencyInjection.injector.model.get('$MongoService');
 
         DependencyInjection.injector.model.invoke(null, nodeConstructor, {
           model: {
             $createModel: function() {
               return function(schema) {
-                model = $DatabaseService.model(modelName, schema);
+                model = $MongoService.model(modelName, schema);
               };
             },
 

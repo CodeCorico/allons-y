@@ -42,7 +42,7 @@ module.exports = function expressTask(gulp, tasksBefore) {
   gulp.task('express', tasksBefore.concat(['less', 'minify', 'html']), function() {
 
     require(path.resolve(__dirname, 'models/common-i18n-model'))();
-    require(path.resolve(__dirname, 'models/common-database-model'))();
+    require(path.resolve(__dirname, 'models/common-mongo-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-service'))();
     require(path.resolve(__dirname, 'models/common-sockets-service'))();
