@@ -50,19 +50,38 @@ module.exports = {
   afterInstall: afterInstall,
   env: [{
     type: 'input',
-    name: 'DATABASE_HOST',
-    message: 'MongoDB host (with port) connection:'
+    name: 'COUNT_MONGO',
+    message: 'How many MongoDB database you want to use?'
   }, {
+    loop: 'COUNT_MONGO',
     type: 'input',
-    name: 'DATABASE_USER',
-    message: 'MongoDB user:'
+    name: 'MONGO_NAME',
+    message: 'Name your MongoDB instance {{index1}} (capitalized):'
   }, {
+    loop: 'COUNT_MONGO',
     type: 'input',
-    name: 'DATABASE_PASSWORD',
-    message: 'MongoDB password:'
+    name: 'MONGO_HOST',
+    message: 'MongoDB instance {{index1}} host (with port):'
   }, {
+    loop: 'COUNT_MONGO',
     type: 'input',
-    name: 'DATABASE_NAME',
-    message: 'MongoDB database name:'
+    name: 'MONGO_USER',
+    message: 'MongoDB instance {{index1}} user:'
+  }, {
+    loop: 'COUNT_MONGO',
+    type: 'input',
+    name: 'MONGO_PASSWORD',
+    message: 'MongoDB instance {{index1}} password:'
+  }, {
+    loop: 'COUNT_MONGO',
+    type: 'input',
+    name: 'MONGO_DB',
+    message: 'MongoDB instance {{index1}} database name:'
+  }, {
+    loop: 'COUNT_MONGO',
+    type: 'input',
+    name: 'MONGO_POOL_SIZE',
+    message: 'MongoDB instance {{index1}} pool size:',
+    default: 19
   }]
 };
