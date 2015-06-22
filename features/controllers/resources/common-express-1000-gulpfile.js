@@ -42,10 +42,28 @@ module.exports = function expressTask(gulp, tasksBefore) {
   gulp.task('express', tasksBefore.concat(['less', 'minify', 'html']), function() {
 
     require(path.resolve(__dirname, 'models/common-i18n-model'))();
-    require(path.resolve(__dirname, 'models/common-mongo-model'))();
+    require(path.resolve(__dirname, 'models/common-mongo-service'))();
     require(path.resolve(__dirname, 'models/common-abstract-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-service'))();
     require(path.resolve(__dirname, 'models/common-sockets-service'))();
+
+    var countMongo = parseInt(process.env.COUNT_MONGO || 0, 10);
+
+    if (countMongo) {
+      var $MongoService = DependencyInjection.injector.controller.get('$MongoService');
+
+      Array.apply(null, {length: countMongo}).map(Number.call, Number).forEach(function(i) {
+        DependencyInjection.service('$Mongo' + process.env['MONGO_NAME_' + i], [function() {
+          return $MongoService.create(
+            process.env['MONGO_HOST_' + i],
+            process.env['MONGO_DB_' + i],
+            process.env['MONGO_USER_' + i],
+            process.env['MONGO_PASSWORD_' + i],
+            process.env['MONGO_POOL_SIZE_' + i]
+          );
+        }]);
+      });
+    }
 
     var server = express();
 
