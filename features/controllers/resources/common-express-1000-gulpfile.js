@@ -43,6 +43,7 @@ module.exports = function expressTask(gulp, tasksBefore) {
 
     require(path.resolve(__dirname, 'models/common-i18n-model'))();
     require(path.resolve(__dirname, 'models/common-mongo-service'))();
+    require(path.resolve(__dirname, 'models/common-sql-service'))();
     require(path.resolve(__dirname, 'models/common-abstract-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-service'))();
     require(path.resolve(__dirname, 'models/common-sockets-service'))();
@@ -60,6 +61,25 @@ module.exports = function expressTask(gulp, tasksBefore) {
             process.env['MONGO_USER_' + i],
             process.env['MONGO_PASSWORD_' + i],
             process.env['MONGO_POOL_SIZE_' + i]
+          );
+        }]);
+      });
+    }
+
+    var countSQL = parseInt(process.env.SQL_COUNT || 0, 10);
+
+    if (countSQL) {
+      var $SQLService = DependencyInjection.injector.controller.get('$SQLService');
+
+      Array.apply(null, {length: countSQL}).map(Number.call, Number).forEach(function(i) {
+        DependencyInjection.service('$SQL' + process.env['SQL_NAME_' + i], [function() {
+          return $SQLService.create(
+            process.env['SQL_TYPE_' + i],
+            process.env['SQL_HOST_' + i],
+            process.env['SQL_DB_' + i],
+            process.env['SQL_USER_' + i],
+            process.env['SQL_PASSWORD_' + i],
+            process.env['SQL_POOL_SIZE_' + i]
           );
         }]);
       });
