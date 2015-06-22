@@ -18,6 +18,12 @@ module.exports = function() {
               };
             },
 
+            $returnSQLModel: function() {
+              return function(databaseInstance, schema, options) {
+                model = databaseInstance.define(modelName, schema, options);
+              };
+            },
+
             $returnModel: function() {
               return function(returnModel) {
                 model = returnModel;
