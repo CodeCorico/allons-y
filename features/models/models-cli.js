@@ -11,12 +11,33 @@ function beforeInstall(config, utils, next) {
   config.package = extend(true, {
     dependencies: {
       async: '^0.9.2',
-      'events-manager': '^1.0.4',
-      mongoose: '^4.0.1',
-      sequelize: '^3.3.0',
-      mysql: '^2.7.0'
+      'events-manager': '^1.0.4'
     }
   }, config.package);
+
+  if (config.install.mongodb) {
+    config.package = extend(true, {
+      dependencies: {
+        mongoose: '^4.0.1'
+      }
+    }, config.package);
+  }
+
+  if (config.install.sql) {
+    config.package = extend(true, {
+      dependencies: {
+        sequelize: '^3.3.0'
+      }
+    }, config.package);
+  }
+
+  if (config.install.mysql) {
+    config.package = extend(true, {
+      dependencies: {
+        mysql: '^2.7.0'
+      }
+    }, config.package);
+  }
 
   utils.log('[OK]\n');
 
@@ -48,6 +69,25 @@ function afterInstall(config, utils, next) {
 }
 
 module.exports = {
+  install: [{
+    type: 'confirm',
+    name: 'mongodb',
+    message: 'Use MongoDB connector (Mongoose)?',
+    default: true
+  }, {
+    type: 'confirm',
+    name: 'sql',
+    message: 'Use SQL connector (Sequelize)?',
+    default: true
+  }, {
+    type: 'confirm',
+    name: 'mysql',
+    message: 'Use MySQL (with Sequelize)?',
+    default: true,
+    when: function(answers) {
+      return answers.sql;
+    }
+  }],
   beforeInstall: beforeInstall,
   afterInstall: afterInstall,
   env: [{
