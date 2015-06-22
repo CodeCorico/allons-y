@@ -25,7 +25,7 @@ function beforeInstall(config, utils, next) {
         jquery: '^2.1.3',
         ractive: '^0.7.1',
         'ractive-require': '^0.2.2',
-        plumes: '^0.1.0' + (config.install['plumes-beta'] ? '#quality' : '')
+        plumes: config.install['plumes-unstable'] ? 'git+ssh://git@github.com/CodeCorico/plumes.git' : '^0.1.0'
       }
     }, config.package);
   }
@@ -135,8 +135,8 @@ module.exports = {
     default: true
   }, {
     type: 'confirm',
-    name: 'plumes-beta',
-    message: 'Use Plumes #quality version?',
+    name: 'plumes-unstable',
+    message: 'Use Plumes #master version (unstable)?',
     default: false,
     when: function(answers) {
       return answers.plumes;
