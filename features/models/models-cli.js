@@ -12,7 +12,9 @@ function beforeInstall(config, utils, next) {
     dependencies: {
       async: '^0.9.2',
       'events-manager': '^1.0.4',
-      mongoose: '^4.0.1'
+      mongoose: '^4.0.1',
+      sequelize: '^3.3.0',
+      mysql: '^2.7.0'
     }
   }, config.package);
 
