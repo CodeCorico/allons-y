@@ -13,14 +13,6 @@ module.exports = function() {
         return _connections;
       };
 
-      this.defaultConnection = function() {
-        if (_connections && _connections.length) {
-          return _connections[0];
-        }
-
-        return null;
-      };
-
       this.create = function(host, database, user, password, poolSize) {
         // MongDB max connections: 20 - Mongoose monitor 1 = 19
         poolSize = poolSize || 19;
