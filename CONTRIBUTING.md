@@ -220,10 +220,13 @@ Only the lead contribution team can publish a new version. To do that, it requir
 
 Publish the new version:
 * Pull the last version of `master` branch
-* Update CHANGELOG.md file with the actual date and links of the milestone
-* Create commit with its last changes named: `Version [new version number]`
-* Create a new tag on this commit named `[new version number]`
-* Push this branch to `allons-y:master`
+* Define the new version number (format MAJOR.MINOR.REVISION)
+* Update the `package.json` version
+* Update the `CHANGELOG.md` file with the new changes
+* Commit these changes with `chore(*): uopdate version to 0.0.0`
+* Create a new tag on this commit named `[new version number]` (format: 0.0.0)
+* Push the branch
+* Push the new tag release with ```git push --tags```
 
 ## <a name="infos"></a> Further Info
 
