@@ -5,18 +5,20 @@ module.exports = function() {
       events = isNode ? require('events-manager').EventsManager : window.EventsManager;
 
   DependencyInjection.model('$AbstractModel', [function() {
-    return function AbstractModel(modelName, nodeConstructor, browserConstructor) {
+    return function AbstractModel(modelName, nodeConstructor, browserConstructor, databaseService) {
 
       var model;
 
       if (isNode && nodeConstructor) {
-        var $MongoService = DependencyInjection.injector.model.get('$MongoService');
-
         DependencyInjection.injector.model.invoke(null, nodeConstructor, {
           model: {
-            $createModel: function() {
+            $returnDatabaseModel: function() {
               return function(schema) {
-                model = $MongoService.model(modelName, schema);
+                if (!databaseService) {
+                  var $MongoService = DependencyInjection.injector.model.get('$MongoService');
+                  databaseService = $MongoService.defaultConnection();
+                }
+                model = databaseService.model(modelName, schema);
               };
             },
 
