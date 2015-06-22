@@ -87,10 +87,12 @@ The footer is the place to reference GitHub issues, tasks, etc.
 Only the lead contribution team can publish a new version. To do that, it requires that the milestone is completely finished.
 
 Publish the new version:
-* Pull the last version of `quality` branch
-* Merge `quality` to `master` branch
+* Pull the last version of `master` branch
+* Define the new version number (format MAJOR.MINOR.REVISION)
+* Update the `package.json` version
+* Commit these changes with `chore(*): uopdate version to 0.0.0`
 * Create a new tag on this commit named `[new version number]` (format: 0.0.0)
-* Push this branch to `{{name}}:master`
+* Push the branch
 * Push the new tag release with ```git push --tags```
 
 ## <a name="infos"></a> Further Info
