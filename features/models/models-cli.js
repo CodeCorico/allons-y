@@ -85,5 +85,45 @@ module.exports = {
     name: 'MONGO_POOL_SIZE',
     message: 'MongoDB instance {{index1}} pool size:',
     default: 19
+  }, {
+    type: 'input',
+    name: 'SQL_COUNT',
+    message: 'How many SQL databases you want to use?'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_NAME',
+    message: 'Name your SQL instance {{index1}} (capitalized):'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_TYPE',
+    message: 'Type of your instance {{index1}} (mysql|mariadb|sqlite|postgres|mssql):'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_HOST',
+    message: 'SQL instance {{index1}} host (with port):'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_USER',
+    message: 'SQL instance {{index1}} user:'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_PASSWORD',
+    message: 'SQL instance {{index1}} password:'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_DB',
+    message: 'SQL instance {{index1}} database name:'
+  }, {
+    loop: 'SQL_COUNT',
+    type: 'input',
+    name: 'SQL_POOL_SIZE',
+    message: 'SQL instance {{index1}} pool size:',
+    default: 5
   }]
 };
