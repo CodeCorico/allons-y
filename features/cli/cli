@@ -112,18 +112,70 @@ function cliPrompt(config, promptType, forcePrompt, tasksFunc) {
         hasPrompt = true;
       }
 
-      prompts.map(function(prompt) {
+      var loopSeries = [];
+
+      var firstSeries = prompts.filter(function(prompt) {
         if (typeof config[promptType][prompt.name] != 'undefined') {
           prompt.default = config[promptType][prompt.name];
         }
+
+        if (!prompt.loop) {
+          return prompt;
+        }
+        else {
+          loopSeries.push(prompt);
+        }
       });
 
-      inquirer.prompt(prompts, function(values) {
+      inquirer.prompt(firstSeries, function(values) {
         for (item in values) {
           config[promptType][item] = values[item];
         }
 
-        next();
+        if (loopSeries.length) {
+          var secondSeries = [],
+              secondSeriesSorting = {};
+
+          loopSeries.forEach(function(prompt) {
+            secondSeriesSorting[prompt.loop] = secondSeriesSorting[prompt.loop] || [];
+
+            var length = parseInt(config[promptType][prompt.loop], 10);
+
+            for (var i = 0; i < length; i++) {
+              secondSeriesSorting[prompt.loop][i] = secondSeriesSorting[prompt.loop][i] || [];
+
+              var newPrompt = extend(true, {}, prompt);
+              newPrompt.name += '_' + i;
+              newPrompt.message = newPrompt.message
+                .replace(/{{index}}/g, i)
+                .replace(/{{index1}}/g, i + 1)
+                .replace(/{{length}}/g, length);
+
+              if (typeof config[promptType][newPrompt.name] != 'undefined') {
+                newPrompt.default = config[promptType][newPrompt.name];
+              }
+
+              secondSeriesSorting[prompt.loop][i].push(newPrompt);
+            }
+          });
+
+          Object.keys(secondSeriesSorting).forEach(function(key) {
+            for (var i = 0; i < secondSeriesSorting[key].length; i++) {
+              secondSeries = secondSeries.concat(secondSeriesSorting[key][i]);
+            }
+          });
+
+          inquirer.prompt(secondSeries, function(values) {
+            for (item in values) {
+              config[promptType][item] = values[item];
+            }
+
+            next();
+          });
+        }
+        else {
+          next();
+        }
       });
 
       return;
