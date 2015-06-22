@@ -47,7 +47,7 @@ module.exports = function expressTask(gulp, tasksBefore) {
     require(path.resolve(__dirname, 'models/common-abstract-service'))();
     require(path.resolve(__dirname, 'models/common-sockets-service'))();
 
-    var countMongo = parseInt(process.env.COUNT_MONGO || 0, 10);
+    var countMongo = parseInt(process.env.MONGO_COUNT || 0, 10);
 
     if (countMongo) {
       var $MongoService = DependencyInjection.injector.controller.get('$MongoService');
