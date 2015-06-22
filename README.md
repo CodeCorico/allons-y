@@ -15,11 +15,6 @@ Include the Allons-y! app globally with:
 npm install -g allons-y
 ```
 
-For quality version (similar to beta):
-```
-npm install -g allons-y#quality
-```
-
 ## Create a new plateform
 
 Allons-y! uses a wizard form to configure your platreform and install its architecture.
