@@ -58,14 +58,14 @@
     }
   }
 
-  Ractive.fireController = function(name, Component, data, el, config) {
+  Ractive.fireController = function(name, Component, data, el, config, callback) {
     if (_ractiveControllers[name]) {
       return _callControllers(_ractiveControllers[name], Component, data, el, config, 0, function() {
-        _fireController(name, Component, data, el, config);
+        _fireController(name, Component, data, el, config, callback);
       });
     }
 
-    _fireController(name, Component, data, el, config);
+    _fireController(name, Component, data, el, config, callback);
   };
 
   window.bootstrap = function(func, requiresBefore) {
@@ -111,10 +111,7 @@
                 view: {
                   $done: function() {
                     return function done() {
-                      window.Ractive.controller('layout', function(component, data, el, config, done) {
-                        window.page();
-                        done();
-                      });
+                      window.page();
                     };
                   }
                 }
