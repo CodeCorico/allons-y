@@ -13,7 +13,7 @@ function beforeInstall(config, utils, next) {
       gulp: '^3.9.0',
       'gulp-rename': '^1.2.2',
       'gulp-sourcemaps': '^1.5.2',
-      'gulp-uglify': '^1.1.0',
+      'gulp-uglify': '^1.2.0',
       glob: '^5.0.10',
       page: '^1.6.3'
     }
