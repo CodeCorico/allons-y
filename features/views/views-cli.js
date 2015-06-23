@@ -22,7 +22,7 @@ function beforeInstall(config, utils, next) {
   if (config.install.plumes) {
     config.package = extend(true, {
       dependencies: {
-        jquery: '^2.1.3',
+        jquery: '^2.1.4',
         ractive: '^0.7.1',
         'ractive-require': '^0.2.2',
         plumes: config.install['plumes-unstable'] ? 'git+ssh://git@github.com/CodeCorico/plumes.git' : '^0.1.0'
