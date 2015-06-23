@@ -25,7 +25,7 @@ function beforeInstall(config, utils, next) {
         jquery: '^2.1.4',
         ractive: '^0.7.3',
         'ractive-require': '^0.2.4',
-        plumes: config.install['plumes-unstable'] ? 'git+ssh://git@github.com/CodeCorico/plumes.git' : '^0.1.0'
+        plumes: config.install['plumes-unstable'] ? 'git+ssh://git@github.com/CodeCorico/plumes.git' : '^0.2.0'
       }
     }, config.package);
   }
