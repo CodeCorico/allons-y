@@ -18,7 +18,7 @@ function beforeInstall(config, utils, next) {
   if (config.install.mongodb) {
     config.package = extend(true, {
       dependencies: {
-        mongoose: '^4.0.1'
+        mongoose: '^4.0.6'
       }
     }, config.package);
   }
