@@ -90,7 +90,7 @@ Publish the new version:
 * Pull the last version of `master` branch
 * Define the new version number (format MAJOR.MINOR.REVISION)
 * Update the `package.json` version
-* Commit these changes with `chore(*): uopdate version to 0.0.0`
+* Commit these changes with `chore(*): update version to 0.0.0`
 * Create a new tag on this commit named `[new version number]` (format: 0.0.0)
 * Push the branch
 * Push the new tag release with ```git push --tags```
