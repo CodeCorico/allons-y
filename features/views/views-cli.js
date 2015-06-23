@@ -15,7 +15,7 @@ function beforeInstall(config, utils, next) {
       'gulp-sourcemaps': '^1.5.1',
       'gulp-uglify': '^1.1.0',
       glob: '^5.0.10',
-      page: '^1.6.2'
+      page: '^1.6.3'
     }
   }, config.package);
 
