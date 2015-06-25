@@ -55,6 +55,8 @@ function afterInstall(config, utils, next) {
   mkdirp.sync(path.join(featuresDest, 'shortcuts/models'));
 
   utils.copy(path.join(source, 'common-models-gulpfile.js'), path.join(featuresDest, 'common/common-models-gulpfile.js'));
+  utils.copy(path.join(source, 'common-async-gulpfile.js'), path.join(featuresDest, 'common/common-async-gulpfile.js'));
+  utils.copy(path.join(source, 'common-events-manager-gulpfile.js'), path.join(featuresDest, 'common/common-events-manager-gulpfile.js'));
   utils.copy(path.join(source, 'favicon-service.js'), path.join(featuresDest, 'favicon/models/favicon-service.js'));
   utils.copy(path.join(source, 'shortcuts-service.js'), path.join(featuresDest, 'shortcuts/models/shortcuts-service.js'));
 
