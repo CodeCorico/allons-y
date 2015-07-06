@@ -14,7 +14,7 @@ function beforeInstall(config, utils, next) {
       'gulp-rename': '^1.2.2',
       'gulp-sourcemaps': '^1.5.2',
       'gulp-uglify': '^1.2.0',
-      glob: '^5.0.10',
+      glob: '^5.0.13',
       page: '^1.6.3'
     }
   }, config.package);
