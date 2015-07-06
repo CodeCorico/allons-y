@@ -9,7 +9,7 @@ function beforeInstall(config, utils, next) {
 
   config.package = extend(true, {
     dependencies: {
-      evolv: '^0.1.1'
+      evolv: '^0.1.2'
     },
     scripts: {
       evolve: 'node evolve'
