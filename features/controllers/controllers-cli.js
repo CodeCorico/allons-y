@@ -10,7 +10,7 @@ function beforeInstall(config, utils, next) {
 
   config.package = extend(true, {
     dependencies: {
-      'body-parser': '^1.13.1',
+      'body-parser': '^1.13.2',
       dotenv: '^1.2.0',
       express: '^4.13.0',
       extend: '^2.0.1',
