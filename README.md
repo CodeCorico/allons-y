@@ -4,7 +4,7 @@
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/issue)](http://issuestats.com/github/codecorico/allons-y)
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/pr)](http://issuestats.com/github/codecorico/allons-y)
 
-Allons-y! is a webapps plateform installer that come from a S.F. movie.
+Allons-y! is a webapps platform installer that come from a S.F. movie.
 
 [![Microsoft: Productivity Future Vision](http://img.youtube.com/vi/hBNH8qub_vI/0.jpg)](http://www.youtube.com/watch?v=hBNH8qub_vI)
 
@@ -15,7 +15,7 @@ Include the Allons-y! app globally with:
 npm install -g allons-y
 ```
 
-## Create a new plateform
+## Create a new platform
 
 Allons-y! uses a wizard form to configure your platreform and install its architecture.
 Create an empty directory then instantiate Allons-y!:
@@ -25,11 +25,11 @@ cd myProject
 allons-y init
 ```
 
-After that, your plateform is standalone, you do not need the ```allons-y``` command to support it.
+After that, your platform is standalone, you do not need the ```allons-y``` command to support it.
 
 ## Setup your environment(s)
 
-Your plateform architeture comes with the ```dotenv``` module. Use the following wizard to help you configure your environment:
+Your platform architeture comes with the ```dotenv``` module. Use the following wizard to help you configure your environment:
 ```
 allons-y env
 ```
@@ -52,7 +52,7 @@ Use this format in your json file:
 
 The ```.env``` file configuration can't be indexed in your repo, it's up to your environment. You can easily configurate other environments with ```allons-y env``` or with a copy of your ```.env``` file.
 
-## Update a plateform
+## Update a platform
 
 Allons-y! evolves with time. Its architecture and bugs are frequently fixed. If you want to update your project with the last version, use:
 ```

@@ -27,11 +27,11 @@ var ALLONSY_RC_FILE = '.allonsyrc',
 program
   .version(utils.package.name + ' ' + utils.package.version, '-v, --version')
   .usage('[options]')
-  .option('-f, --force', 'Force the creation/update of the plateform')
-  .option('-n, --no-npm', 'Create/update the plateform without use npm')
-  .option('init', 'Create an Allons-y! plateform')
-  .option('update', 'Update a Allons-y! plateform')
-  .option('env', 'Configure your plateform environment')
+  .option('-f, --force', 'Force the creation/update of the platform')
+  .option('-n, --no-npm', 'Create/update the platform without use npm')
+  .option('init', 'Create a new Allons-y! platform')
+  .option('update', 'Update an Allons-y! platform')
+  .option('env', 'Configure your platform environment')
   .parse(process.argv);
 
 function config() {
@@ -201,7 +201,7 @@ if (program.init || program.update) {
   config.version = utils.package.version;
 
   utils.banner([
-    'You are going to ' + (program.init ? 'create a' : 'update your') + ' Allons-y! plateform (' + utils.package.version + ').\n',
+    'You are going to ' + (program.init ? 'create a' : 'update your') + ' Allons-y! platform (' + utils.package.version + ').\n',
     'Please answer the few questions below to configure your install:\n'
   ]);
 
@@ -290,7 +290,7 @@ if (program.init || program.update) {
 if (program.env) {
   var config = config();
 
-  utils.banner('Configure your Allons-y! plateform (' + utils.package.version + ') environment:\n');
+  utils.banner('Configure your Allons-y! platform (' + utils.package.version + ') environment:\n');
 
   cliPrompt(config, 'env', true, function() {
 
@@ -333,7 +333,7 @@ if (program.env) {
 
       utils.log('[OK]');
 
-      utils.title('Your plateform environment is ready!');
+      utils.title('Your platform environment is ready!');
     });
   });
 

@@ -1,7 +1,7 @@
 {
   "name": "allons-y",
   "version": "0.2.1",
-  "description": "Allons-y! is a webapps plateform installer that come from a S.F. movie.",
+  "description": "Allons-y! is a webapps platform installer that come from a S.F. movie.",
   "main": "features/cli/cli.js",
   "scripts": {
     "start": "node features/cli/cli"
@@ -12,7 +12,7 @@
   },
   "keywords": [
     "webapps",
-    "plateform",
+    "platform",
     "patterns",
     "architecture",
     "plumes"

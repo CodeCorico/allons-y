@@ -15,7 +15,7 @@ Versions details history. For each version you can find:
 ### Hotixes
 
 - **Cli**
-  - Fix copy of ```common-async-gulpfile.js``` and ```common-events-manager-gulpfile.js``` to destination plateform.
+  - Fix copy of ```common-async-gulpfile.js``` and ```common-events-manager-gulpfile.js``` to destination platform.
 
 <a name="0.2.0"></a>
 # 0.2.0 (2015-06-23)
@@ -25,8 +25,8 @@ Versions details history. For each version you can find:
 ### Breaking changes
 
 - **Start/Stop**
-  - ```npm stop``` stops the active plateform instance.
-  - ```npm start``` kills the active plateform instance before restart it. It calls ```npm install``` then ```node evolve``` between stoping and starting the plateform.
+  - ```npm stop``` stops the active platform instance.
+  - ```npm start``` kills the active platform instance before restart it. It calls ```npm install``` then ```node evolve``` between stoping and starting the platform.
 - **Abstract service**
   - Add arguments support in ```teardown``` and ```beforeTeardown``` events.
 - **Databases**

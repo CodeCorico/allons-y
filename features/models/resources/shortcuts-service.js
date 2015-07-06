@@ -7,7 +7,7 @@ module.exports = function() {
 
       var _this = this,
           _shortcuts = {},
-          _defaultGroup = $i18nService._('In the plateform');
+          _defaultGroup = $i18nService._('In the platform');
 
       this.shortcuts = function() {
         return _shortcuts;
