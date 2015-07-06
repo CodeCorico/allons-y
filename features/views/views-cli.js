@@ -25,7 +25,7 @@ function beforeInstall(config, utils, next) {
         jquery: '^2.1.4',
         ractive: '^0.7.3',
         'ractive-require': '^0.2.4',
-        plumes: config.install['plumes-unstable'] ? 'git+ssh://git@github.com/CodeCorico/plumes.git' : '^0.2.0'
+        plumes: '^0.2.0'
       }
     }, config.package);
   }
@@ -133,14 +133,6 @@ module.exports = {
     name: 'plumes',
     message: 'Use jQuery + Ractive.js + Plumes?',
     default: true
-  }, {
-    type: 'confirm',
-    name: 'plumes-unstable',
-    message: 'Use Plumes #master version (unstable)?',
-    default: false,
-    when: function(answers) {
-      return answers.plumes;
-    }
   }],
   beforeInstall: beforeInstall,
   afterInstall: afterInstall,
