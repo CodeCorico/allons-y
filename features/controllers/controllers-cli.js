@@ -19,7 +19,8 @@ function beforeInstall(config, utils, next) {
       'mvw-injection': '^0.2.4',
       mkdirp: '^0.5.1',
       'socket.io': '^1.3.5',
-      'socket.io-cookie-parser': '^1.0.0'
+      'socket.io-cookie-parser': '^1.0.0',
+      waterline: '^0.10.25'
     }
   }, config.package);
 
