@@ -4,7 +4,7 @@
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/issue)](http://issuestats.com/github/codecorico/allons-y)
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/pr)](http://issuestats.com/github/codecorico/allons-y)
 
-Allons-y! is a webapps platform installer that come from a S.F. movie.
+Allons-y! is a webapps platform installer that comes from a Sci-Fi movie.
 
 [![Microsoft: Productivity Future Vision](http://img.youtube.com/vi/hBNH8qub_vI/0.jpg)](http://www.youtube.com/watch?v=hBNH8qub_vI)
 
@@ -25,16 +25,16 @@ cd myProject
 allons-y init
 ```
 
-After that, your platform is standalone, you do not need the ```allons-y``` command to support it.
+After that, your platform is stand-alone, you do not need the ```allons-y``` command to support it.
 
 ## Setup your environment(s)
 
-Your platform architeture comes with the ```dotenv``` module. Use the following wizard to help you configure your environment:
+Your platform architecture comes with the [dotenv](https://github.com/bkeepers/dotenv) module. Use the following wizard to help you configure your environment:
 ```
 allons-y env
 ```
 
-Each configuration comes from Alolons-y! but you can add you own by adding *-env.json files in your /features. E.g:
+Each configuration comes from Allons-y! but you can add you own by adding ```*-env.json``` files in your ```/features``` directory. E.g.:
 ```features/users/users-env.json``` will be used in the env configuration.
 Use this format in your json file:
 ```json
@@ -50,19 +50,19 @@ Use this format in your json file:
 
 ```env``` is an array containing your questions. See the [Inquirer](https://github.com/SBoudrias/Inquirer.js) documentation to configure your questions.
 
-The ```.env``` file configuration can't be indexed in your repo, it's up to your environment. You can easily configurate other environments with ```allons-y env``` or with a copy of your ```.env``` file.
+The ```.env``` file configuration can't be indexed in your repo, it depends on your environment. You can easily configure other environments with ```allons-y env``` or with a copy of your ```.env``` file.
 
 ## Update a platform
 
-Allons-y! evolves with time. Its architecture and bugs are frequently fixed. If you want to update your project with the last version, use:
+Allons-y! evolves with time. Its architecture and bugs are frequently fixed. If you want to update your project with the latest version, use:
 ```
 cd myProject
 allons-y update
 ```
 
-You can pass these attributes:
+You can add the following arguments:
 - ```--no-npm``` to avoid the call of ```npm update```
-- ```--force``` to force the update even if the version is already up to date.
+- ```--force``` to force the update even if the version is already up to date
 
 ## Developer rules
 
