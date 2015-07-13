@@ -15,30 +15,6 @@ function beforeInstall(config, utils, next) {
     }
   }, config.package);
 
-  if (config.install.mongodb) {
-    config.package = extend(true, {
-      dependencies: {
-        mongoose: '^4.0.6'
-      }
-    }, config.package);
-  }
-
-  if (config.install.sql) {
-    config.package = extend(true, {
-      dependencies: {
-        sequelize: '^3.3.0'
-      }
-    }, config.package);
-  }
-
-  if (config.install.mysql) {
-    config.package = extend(true, {
-      dependencies: {
-        mysql: '^2.7.0'
-      }
-    }, config.package);
-  }
-
   utils.log('[OK]\n');
 
   next();
@@ -71,7 +47,7 @@ function afterInstall(config, utils, next) {
 }
 
 module.exports = {
-  install: [{
+  /*install: [{
     type: 'confirm',
     name: 'mongodb',
     message: 'Use MongoDB connector (Mongoose)?',
@@ -89,7 +65,7 @@ module.exports = {
     when: function(answers) {
       return answers.sql;
     }
-  }],
+  }],*/
   beforeInstall: beforeInstall,
   afterInstall: afterInstall,
   env: [{
