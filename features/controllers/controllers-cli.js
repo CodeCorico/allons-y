@@ -16,7 +16,7 @@ function beforeInstall(config, utils, next) {
       extend: '^2.0.1',
       compression: '^1.4.3',
       'cookie-parser': '^1.3.5',
-      'mvw-injection': '^0.2.3',
+      'mvw-injection': '^0.2.4',
       mkdirp: '^0.5.1',
       'socket.io': '^1.3.5',
       'socket.io-cookie-parser': '^1.0.0'
