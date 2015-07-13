@@ -41,6 +41,7 @@ module.exports = function expressTask(gulp, tasksBefore) {
 
   gulp.task('express', tasksBefore.concat(['less', 'minify', 'html']), function() {
 
+    require(path.resolve(__dirname, 'models/common-body-data-model'))();
     require(path.resolve(__dirname, 'models/common-i18n-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-service'))();

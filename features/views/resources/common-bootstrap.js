@@ -82,6 +82,9 @@
         return require('/public/common/common-abstract-service.js');
       })
       .then(function() {
+        return require('/public/common/common-body-data-model.js');
+      })
+      .then(function() {
         return require('/public/favicon/favicon-service.js');
       })
       .then(function() {
