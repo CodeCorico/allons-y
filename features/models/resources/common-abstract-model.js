@@ -5,35 +5,26 @@ module.exports = function() {
       events = isNode ? require('events-manager').EventsManager : window.EventsManager;
 
   DependencyInjection.model('$AbstractModel', [function() {
-    return function AbstractModel(modelName, nodeConstructor, browserConstructor) {
-
-      var model;
+    return function AbstractModel(name, nodeConstructor, browserConstructor) {
 
       if (isNode && nodeConstructor) {
-        DependencyInjection.injector.model.invoke(null, nodeConstructor, {
-          model: {
-            $returnMongoModel: function() {
-              return function(databaseInstance, schema) {
-                model = databaseInstance.model(modelName, schema);
-              };
-            },
+        var Waterline = require('waterline'),
+            injectorModel = DependencyInjection.injector.model,
+            $DatabaseService = injectorModel.get('$DatabaseService'),
+            config = injectorModel.invoke(null, nodeConstructor);
 
-            $returnSQLModel: function() {
-              return function(databaseInstance, schema, options) {
-                model = databaseInstance.define(modelName, schema, options);
-              };
-            },
+        if (!config || !config.identity) {
+          return console.log(new Error('Missing "identity" property in schema'));
+        }
 
-            $returnModel: function() {
-              return function(returnModel) {
-                model = returnModel;
-              };
-            }
-          }
-        });
+        var model = Waterline.Collection.extend(config);
+
+        $DatabaseService.loadModel(name, config.identity, model);
+
+        return model;
       }
       else if (!isNode && browserConstructor) {
-        model = function(config) {
+        return function(config) {
 
           var _this = this;
 
@@ -52,8 +43,6 @@ module.exports = function() {
           });
         };
       }
-
-      return model;
     };
   }]);
 
