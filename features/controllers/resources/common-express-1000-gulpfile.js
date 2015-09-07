@@ -6,6 +6,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     compression = require('compression'),
     cookieParser = require('cookie-parser'),
+    packageJson = require(path.resolve(__dirname, '../../package.json')),
     socketIoCookieParser = require('socket.io-cookie-parser'),
     DependencyInjection = require('mvw-injection').MVC();
 
@@ -41,7 +42,7 @@ module.exports = function expressTask(gulp, tasksBefore) {
 
   gulp.task('express', tasksBefore.concat(['less', 'minify', 'html']), function() {
 
-    require(path.resolve(__dirname, 'models/common-body-data-model'))();
+    require(path.resolve(__dirname, 'models/common-body-data-service'))();
     require(path.resolve(__dirname, 'models/common-i18n-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-model'))();
     require(path.resolve(__dirname, 'models/common-abstract-service'))();
@@ -93,7 +94,8 @@ module.exports = function expressTask(gulp, tasksBefore) {
       });
 
       http.listen(server.get('port'), function() {
-        console.log('► SERVER IS RUNNING ON :' + process.env.PORT);
+        console.log('► SERVER (' + packageJson.version + ') IS RUNNING ON :' + process.env.PORT);
+
       });
     });
   });

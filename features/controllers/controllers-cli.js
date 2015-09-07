@@ -47,7 +47,7 @@ function afterInstall(config, utils, next) {
 
   mkdirp.sync(path.join(destFeatures, config.install.name));
 
-  ['api-10-express', 'public-10-express', 'index-20-express', 'event-10-socketio', 'errors-1000-express']
+  ['api-100-express', 'public-10-express', 'index-200-express', 'event-100-socketio', 'errors-1000-express']
     .forEach(function(name) {
       var expressFile = path.join(destFeatures, config.install.name, config.install.name + '-' + name + '.js');
       if (!fs.existsSync(expressFile)) {

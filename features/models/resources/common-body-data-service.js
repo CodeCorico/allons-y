@@ -3,9 +3,9 @@ module.exports = function() {
 
   var isNode = typeof module != 'undefined' && typeof module.exports != 'undefined';
 
-  DependencyInjection.service('$BodyData', [function() {
+  DependencyInjection.service('$BodyDataService', [function() {
 
-    return new (function BodyData() {
+    return new (function BodyDataService() {
 
       var _data = {},
           _$body = isNode ? null : $('body');

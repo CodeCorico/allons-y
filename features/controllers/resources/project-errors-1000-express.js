@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = ['$server', function($server) {
-  $server.use(function(err, req, res) {
+  $server.use(function(err, req, res, next) {
 
     res
       .status(500)
@@ -54,7 +54,7 @@ module.exports = ['$server', function($server) {
         '<body>',
           '<div class="content">',
             '<h1>{{title}}</h1>',
-            '<h2>Oops. Something went wrong.</h2>',
+            '<h2>Oops, something went wrong.</h2>',
             '<p>We\'re sorry but we\'re working on getting this fixed as soon as we can. You may be able to try again.</p>',
           '</div>',
         '</body>',

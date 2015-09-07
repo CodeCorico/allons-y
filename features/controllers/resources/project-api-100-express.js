@@ -32,7 +32,7 @@ module.exports = ['$server', function($server) {
             },
 
             $done: function() {
-              return function() {};
+              return function() { };
             }
           }
         });
