@@ -37,5 +37,9 @@
     "mkdirp": "~0.5.1",
     "semver": "~4.3.6"
   },
+  "engines": {
+    "node": ">=4.1",
+    "npm": ">=3.2"
+  },
   "license": "MIT"
 }
