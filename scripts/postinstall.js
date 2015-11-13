@@ -11,6 +11,7 @@ packageJSON.scripts.start = 'node ./node_modules/allons-y/start.js';
 packageJSON.scripts.stop = 'node ./node_modules/allons-y/stop.js';
 packageJSON.scripts['allons-y'] = 'node ./node_modules/allons-y/features/cli/cli.js';
 
+jsonfile.spaces = 2;
 jsonfile.writeFileSync(packageSource, packageJSON, {
   spaces: 2
 });
