@@ -4,7 +4,7 @@
   "description": "Allons-y! is a webapps platform installer that come from a S.F. movie.",
   "main": "index.js",
   "scripts": {
-    "start": "node features/cli/cli"
+    "postinstall": "node scripts/postinstall.js"
   },
   "repository": {
     "type": "git",
