@@ -8,12 +8,18 @@ Allons-y! is a webapps platform installer that comes from a Sci-Fi movie.
 
 [![Microsoft: Productivity Future Vision](http://img.youtube.com/vi/hBNH8qub_vI/0.jpg)](http://www.youtube.com/watch?v=hBNH8qub_vI)
 
-## Installation
+## Create an Allons-y! project
 
-Include the Allons-y! app globally with:
+Create your project folder and symply include _allons-y_:
 ```
-npm install -g allons-y
+mkdir my-project
+cd my-project
+npm install allons-y
 ```
+
+Now you can start it with ```npm start```.
+
+# ------- OLD DOC -------
 
 ## Create a new platform
 
