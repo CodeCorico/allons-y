@@ -1,5 +1,4 @@
 'use strict';
 
-module.exports = {
+module.exports = require('./features/allons-y/allons-y.js');
 
-};

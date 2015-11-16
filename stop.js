@@ -1,3 +1,5 @@
-'use strcit';
+'use strict';
 
-console.log('STOP ALLONS-Y!');
+var allonsy = require('./features/allons-y/allons-y.js');
+
+allonsy.stop();
