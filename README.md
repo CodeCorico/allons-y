@@ -19,6 +19,9 @@ npm install allons-y
 
 Now you can start it with ```npm start```.
 
+```node allons-y env```
+```*-env.json```
+
 # ------- OLD DOC -------
 
 ## Create a new platform

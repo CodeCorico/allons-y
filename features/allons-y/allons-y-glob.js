@@ -9,8 +9,8 @@ module.exports = function() {
 
   function _patterns(pattern) {
     return [
-      'features/**/' + pattern,
-      'node_modules/**/features/**/' + pattern
+      './features/**/' + pattern,
+      './node_modules/allons-y*/features/**/' + pattern
     ];
   }
 
@@ -93,11 +93,11 @@ module.exports = function() {
     return files;
   };
 
-  this.filesSortered = function(pattern, callback) {
+  this.findInFeatures = function(pattern, callback) {
     _this.globSortered(_patterns(pattern), callback);
   };
 
-  this.filesSyncSortered = function(pattern) {
+  this.findInFeaturesSync = function(pattern) {
     return _this.globSyncSortered(_patterns(pattern));
   };
 
