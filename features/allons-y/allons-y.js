@@ -7,6 +7,7 @@ var path = require('path'),
 
 module.exports = new (function() {
 
+  require(path.resolve(__dirname, 'allons-y-log.js')).apply(this);
   require(path.resolve(__dirname, 'allons-y-glob.js')).apply(this);
 
   var _this = this;
