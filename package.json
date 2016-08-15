@@ -32,8 +32,7 @@
     "glob": "~5.0.10",
     "inquirer": "~0.8.5",
     "jsonfile": "~2.1.2",
-    "mvw-injection": "~0.2.4",
-    "semver": "~4.3.6"
+    "mvw-injection": "~0.2.4"
   },
   "engines": {
     "node": ">=4.1",
