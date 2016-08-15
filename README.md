@@ -21,6 +21,16 @@ Now you can start it with ```npm start```.
 
 ```node allons-y env```
 ```*-env.json```
+```{
+  fork: true,
+  forkCount: 4,
+  module: [function() {}]
+}```
+```{
+  spawn: true,
+  spawnCommand: 'node',
+  spawnArgs: ['node_modules/gulp/bin/gulp']
+}```
 
 # ------- OLD DOC -------
 

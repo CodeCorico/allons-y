@@ -4,6 +4,8 @@ GLOBAL.DependencyInjection = require('mvw-injection').MVC();
 
 var path = require('path'),
     async = require('async'),
+    fork = require('child_process').fork,
+    spawn = require('child_process').spawn,
     packageInfos = require(path.resolve(__dirname, '../../package.json'));
 
 module.exports = new (function() {
@@ -44,7 +46,7 @@ module.exports = new (function() {
     });
   }
 
-  function _bootstrap(options, callback) {
+  this.bootstrap = function(options, callback) {
     var files = _this.findInFeaturesSync('*allons-y-bootstrap.js');
 
     async.mapSeries(files, function(file, nextFile) {
@@ -55,7 +57,21 @@ module.exports = new (function() {
         return nextFile();
       }
 
-      bootstrapModule.bootstrap(_this, options, nextFile);
+      DependencyInjection.injector.controller.invoke(null, bootstrapModule.bootstrap, {
+        controller: {
+          $allonsy: function() {
+            return _this;
+          },
+
+          $options: function() {
+            return options;
+          },
+
+          $done: function() {
+            return nextFile;
+          }
+        }
+      });
 
     }, function(err) {
       if (err) {
@@ -64,20 +80,30 @@ module.exports = new (function() {
 
       callback();
     });
+  };
+
+  function _startModule(startModule, nextFile) {
+    DependencyInjection.injector.controller.invoke(null, startModule.module, {
+      controller: {
+        $allonsy: function() {
+          return _this;
+        },
+
+        $done: function() {
+          return nextFile;
+        }
+      }
+    });
   }
 
   this.start = function() {
-    console.log('BEFORE START');
-
-    _bootstrap({
+    _this.bootstrap({
       owner: 'start'
     }, function() {
 
-      console.log('START');
-
       var files = _this.findInFeaturesSync('*allons-y-start.js');
 
-      files.forEach(function(file) {
+      async.mapSeries(files, function(file, nextFile) {
         var startModule = require(path.resolve(file));
 
         // fork: true,
@@ -90,15 +116,35 @@ module.exports = new (function() {
         // var child_process.fork('.js')
         // http://stackoverflow.com/questions/13371113/how-can-i-execute-a-node-js-module-as-a-child-process-of-a-node-js-program
 
-        DependencyInjection.injector.controller.invoke(null, startModule.module);
+        if (startModule.fork) {
+          startModule.forkCount = startModule.forkCount || 1;
+
+          for (var i = 0; i < startModule.forkCount; i++) {
+            fork('./node_modules/allons-y/fork.js', [file]);
+          }
+
+          return nextFile();
+        }
+        else if (startModule.spawn) {
+          startModule.spawnCount = startModule.spawnCount || 1;
+          startModule.spawnAgs = startModule.spawnArgs || [];
+
+          for (var i = 0; i < startModule.spawnCount; i++) {
+            spawn(startModule.spawnCommand, startModule.spawnAgs, {
+              stdio: 'inherit'
+            });
+          }
+
+          return nextFile();
+        }
+
+        _startModule(startModule, nextFile);
       });
     });
   };
 
   this.stop = function() {
-    console.log('BEFORE STOP');
-
-    _bootstrap({
+    _this.bootstrap({
       owner: 'stop'
     }, function() {
 
@@ -137,12 +183,42 @@ module.exports = new (function() {
       }
 
       async.mapSeries(commands[commandFound], function(command, nextCommand) {
-        command(_this, commander, nextCommand);
+
+        DependencyInjection.injector.controller.invoke(null, command, {
+          controller: {
+            $allonsy: function() {
+              return _this;
+            },
+
+            $commander: function() {
+              return commander;
+            },
+
+            $done: function() {
+              return nextCommand;
+            }
+          }
+        });
+
       }, function(err) {
         if (err) {
           throw err;
         }
       });
+    });
+  };
+
+  this.fork = function() {
+    _this.bootstrap({
+      owner: 'start'
+    }, function() {
+      if (process.argv.length < 3) {
+        return;
+      }
+
+      var startModule = require(path.resolve(process.argv[2]));
+
+      _startModule(startModule, function() { });
     });
   };
 
