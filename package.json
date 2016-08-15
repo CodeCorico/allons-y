@@ -27,7 +27,7 @@
     "async": "~2.0.1",
     "cli-color": "~1.1.0",
     "commander": "~2.9.0",
-    "extend": "~2.0.1",
+    "extend": "~3.0.0",
     "fs-extra": "~0.18.4",
     "glob": "~5.0.10",
     "inquirer": "~0.8.5",
