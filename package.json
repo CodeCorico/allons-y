@@ -25,7 +25,7 @@
   "homepage": "https://github.com/CodeCorico/allons-y",
   "dependencies": {
     "async": "~2.0.1",
-    "cli-color": "~0.3.3",
+    "cli-color": "~1.1.0",
     "commander": "~2.8.1",
     "extend": "~2.0.1",
     "fs-extra": "~0.18.4",
