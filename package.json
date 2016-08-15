@@ -28,7 +28,7 @@
     "cli-color": "~1.1.0",
     "commander": "~2.9.0",
     "extend": "~3.0.0",
-    "fs-extra": "~0.18.4",
+    "fs-extra": "~0.30.0",
     "glob": "~5.0.10",
     "inquirer": "~0.8.5",
     "jsonfile": "~2.1.2",
