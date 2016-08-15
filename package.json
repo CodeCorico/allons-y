@@ -29,7 +29,7 @@
     "commander": "~2.9.0",
     "extend": "~3.0.0",
     "fs-extra": "~0.30.0",
-    "glob": "~5.0.10",
+    "glob": "^7.0.5",
     "inquirer": "~0.8.5",
     "jsonfile": "~2.1.2",
     "mvw-injection": "~0.2.4"
