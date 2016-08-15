@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/CodeCorico/allons-y",
   "dependencies": {
-    "async": "~0.9.2",
+    "async": "~2.0.1",
     "cli-color": "~0.3.3",
     "commander": "~2.8.1",
     "extend": "~2.0.1",
