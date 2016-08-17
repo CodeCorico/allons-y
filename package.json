@@ -1,7 +1,7 @@
 {
   "name": "allons-y",
   "version": "0.2.1",
-  "description": "Allons-y! is a webapps platform installer that come from a S.F. movie.",
+  "description": "Allons-y is a webapps platform installer that come from a S.F. movie.",
   "main": "index.js",
   "scripts": {
     "postinstall": "node scripts/postinstall.js"
@@ -14,11 +14,9 @@
     "webapps",
     "platform",
     "patterns",
-    "architecture",
-    "plumes"
+    "architecture"
   ],
   "author": "CodeCorico <hello@codecorico.com>",
-  "preferGlobal": true,
   "bugs": {
     "url": "https://github.com/CodeCorico/allons-y/issues"
   },

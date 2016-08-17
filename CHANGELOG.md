@@ -1,4 +1,4 @@
-# Allons-y! - Changelog
+# Allons-y - Changelog
 
 Versions details history. For each version you can find:
 * Name an version number
@@ -67,7 +67,7 @@ Versions details history. For each version you can find:
 
 ### Breaking changes
 
-- **Allons-y!**
+- **Allons-y**
   - Fix bin install (again, my bad)
 
 <a name="0.1.1"></a>
@@ -77,7 +77,7 @@ Versions details history. For each version you can find:
 
 ### Breaking changes
 
-- **Allons-y!**
+- **Allons-y**
   - Fix bin install
 
 <a name="0.1.0"></a>
@@ -87,5 +87,5 @@ Versions details history. For each version you can find:
 
 ### Breaking changes
 
-- **Allons-y!**
+- **Allons-y**
   - Migration from the internal private project

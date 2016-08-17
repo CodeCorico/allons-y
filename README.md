@@ -1,14 +1,14 @@
-# Allons-y!
+# Allons-y
 
 [![Join the chat at https://gitter.im/CodeCorico/allons-y](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CodeCorico/allons-y?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/issue)](http://issuestats.com/github/codecorico/allons-y)
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/pr)](http://issuestats.com/github/codecorico/allons-y)
 
-Allons-y! is a webapps platform installer that comes from a Sci-Fi movie.
+Allons-y is a webapps platform installer that comes from a Sci-Fi movie.
 
 [![Microsoft: Productivity Future Vision](http://img.youtube.com/vi/hBNH8qub_vI/0.jpg)](http://www.youtube.com/watch?v=hBNH8qub_vI)
 
-## Create an Allons-y! project
+## Create an Allons-y project
 
 Create your project folder and symply include _allons-y_:
 ```
@@ -36,8 +36,8 @@ Now you can start it with ```npm start```.
 
 ## Create a new platform
 
-Allons-y! uses a wizard form to configure your platreform and install its architecture.
-Create an empty directory then instantiate Allons-y!:
+Allons-y uses a wizard form to configure your platreform and install its architecture.
+Create an empty directory then instantiate Allons-y:
 ```
 mkdir myProject
 cd myProject
@@ -53,7 +53,7 @@ Your platform architecture comes with the [dotenv](https://github.com/bkeepers/d
 allons-y env
 ```
 
-Each configuration comes from Allons-y! but you can add you own by adding ```*-env.json``` files in your ```/features``` directory. E.g.:
+Each configuration comes from Allons-y but you can add you own by adding ```*-env.json``` files in your ```/features``` directory. E.g.:
 ```features/users/users-env.json``` will be used in the env configuration.
 Use this format in your json file:
 ```json
@@ -73,7 +73,7 @@ The ```.env``` file configuration can't be indexed in your repo, it depends on y
 
 ## Update a platform
 
-Allons-y! evolves with time. Its architecture and bugs are frequently fixed. If you want to update your project with the latest version, use:
+Allons-y evolves with time. Its architecture and bugs are frequently fixed. If you want to update your project with the latest version, use:
 ```
 cd myProject
 allons-y update

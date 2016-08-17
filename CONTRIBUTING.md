@@ -1,4 +1,4 @@
-# Contributing to Allons-y! project
+# Contributing to Allons-y project
 
 We'd love for you to contribute to our source code and to make this project even better and fun than it is
 today! Here are the guidelines we'd like you to follow:
@@ -26,7 +26,7 @@ If you are subject to or witness unacceptable behavior, or have any other concer
 
 ## <a name="question"></a> Got a Question or Problem?
 
-If you have questions about how to use Allons-y!, please direct these to hello@codecorico.com.
+If you have questions about how to use Allons-y, please direct these to hello@codecorico.com.
 
 ## <a name="issue"></a> Found an Issue?
 If you find a bug in the source code or a mistake in the wiki, you can help us by
@@ -63,7 +63,7 @@ understood by other agents and corrected.
 
 To help us understand what is your needs you have to use the [User Story](http://en.wikipedia.org/wiki/User_story) pattern.
 
-In Allons-y!, a feature needs to be in a _user story_ format that represent user's real expectations. When you create a new issue, use this format to explain your request:
+In Allons-y, a feature needs to be in a _user story_ format that represent user's real expectations. When you create a new issue, use this format to explain your request:
 
 ```
 As a <role> I want <goal/desire> so that <benefit>
