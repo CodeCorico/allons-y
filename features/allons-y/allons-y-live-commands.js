@@ -79,7 +79,7 @@ module.exports = function() {
   };
 
   this.waitLiveCommand = function() {
-    if (process.env.LIVE_COMMANDS && process.env.LIVE_COMMANDS == 'false') {
+    if (process.env.ALLONSY_LIVE_COMMANDS && process.env.ALLONSY_LIVE_COMMANDS == 'false') {
       return;
     }
 

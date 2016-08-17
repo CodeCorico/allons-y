@@ -1,7 +1,7 @@
 {
   "env": [{
     "type": "confirm",
-    "name": "LIVE_COMMANDS",
+    "name": "ALLONSY_LIVE_COMMANDS",
     "message": "Enable Live commands:"
   }]
 }

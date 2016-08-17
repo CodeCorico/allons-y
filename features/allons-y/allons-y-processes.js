@@ -244,7 +244,7 @@ module.exports = function() {
 
     _keepPid(process.pid);
 
-    if (!process.env.LIVE_COMMANDS || process.env.LIVE_COMMANDS == 'true') {
+    if (!process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true') {
       _this.logInfo('  Live Commands is enabled. Use "help" to display the available commands.\n\n');
     }
 
