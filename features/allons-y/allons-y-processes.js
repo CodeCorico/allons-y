@@ -296,7 +296,7 @@ module.exports = function() {
                 new (forever.Monitor)('./node_modules/allons-y/fork.js', {
                   max: startModule.forkMaxRestarts,
                   args: [file]
-                }) :
+                }).start() :
                 forever.start(startModule.spawnCommands, {
                   max: startModule.spawnMaxRestarts
                 })
