@@ -25,10 +25,6 @@ module.exports = function() {
 
       DependencyInjection.injector.controller.invoke(null, bootstrapModule.bootstrap, {
         controller: {
-          $allonsy: function() {
-            return _this;
-          },
-
           $options: function() {
             return options;
           },

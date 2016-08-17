@@ -77,10 +77,6 @@ module.exports = function() {
 
         DependencyInjection.injector.controller.invoke(null, command, {
           controller: {
-            $allonsy: function() {
-              return _this;
-            },
-
             $commander: function() {
               return commander;
             },

@@ -71,10 +71,6 @@ module.exports = function() {
 
     DependencyInjection.injector.controller.invoke(null, _commands[command].action, {
       controller: {
-        $allonsy: function() {
-          return _this;
-        },
-
         $args: function() {
           return args;
         }

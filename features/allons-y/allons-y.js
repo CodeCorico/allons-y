@@ -4,7 +4,12 @@ GLOBAL.DependencyInjection = require('mvw-injection').MVC();
 
 module.exports = new (function() {
 
-  var path = require('path');
+  var path = require('path'),
+      _this = this;
+
+  DependencyInjection.service('$allonsy', [function() {
+    return _this;
+  }]);
 
   require(path.resolve(__dirname, 'allons-y-log.js')).apply(this);
   require(path.resolve(__dirname, 'allons-y-glob.js')).apply(this);
