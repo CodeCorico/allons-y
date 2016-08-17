@@ -1,0 +1,7 @@
+{
+  "env": [{
+    "type": "confirm",
+    "name": "LIVE_COMMANDS",
+    "message": "Enable Live commands:"
+  }]
+}

@@ -3,14 +3,9 @@
 *.node_modules
 *node_modules
 *.DS_Store
-pids
-*.pid
 *.seed
+.lock-wscript
+.pids
 lib-cov
 coverage
-build/Release
-.lock-wscript
-.env
-public
-pid
 Thumbs.db
