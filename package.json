@@ -26,6 +26,7 @@
     "cli-color": "~1.1.0",
     "commander": "~2.9.0",
     "extend": "~3.0.0",
+    "forever-monitor": "^1.7.0",
     "fs-extra": "~0.30.0",
     "glob": "^7.0.5",
     "inquirer": "~1.1.2",
