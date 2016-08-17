@@ -130,6 +130,10 @@ module.exports = function() {
               child.processes.splice(j, 1);
             }
 
+            if (!child.processes.length) {
+              _children.splice(i, 1);
+            }
+
             break;
           }
         }
@@ -213,11 +217,13 @@ module.exports = function() {
     process.exit();
   });
 
-  function _callModule(startModule, nextFile) {
+  function _callModule(startModule, index, nextFile) {
+    index = parseInt(index, 10);
+
     DependencyInjection.injector.controller.invoke(null, startModule.module, {
       controller: {
-        $allonsy: function() {
-          return _this;
+        $index: function() {
+          return index;
         },
 
         $done: function() {
@@ -230,6 +236,9 @@ module.exports = function() {
   function _processEvents(p) {
     p.forever.on('restart', function() {
       p.restartDate = new Date();
+    });
+    p.forever.on('exit', function() {
+      _findProcesses([p.id], true);
     });
 
     _keepPid(p.forever.child.pid);
@@ -295,7 +304,7 @@ module.exports = function() {
               forever: startModule.fork ?
                 new (forever.Monitor)('./node_modules/allons-y/fork.js', {
                   max: startModule.forkMaxRestarts,
-                  args: [file]
+                  args: [file, i]
                 }).start() :
                 forever.start(startModule.spawnCommands, {
                   max: startModule.spawnMaxRestarts
@@ -312,7 +321,7 @@ module.exports = function() {
           return nextFile();
         }
 
-        _callModule(startModule, nextFile);
+        _callModule(startModule, 0, nextFile);
       }, function() {
 
         _this.waitLiveCommand();
@@ -361,13 +370,13 @@ module.exports = function() {
     _this.bootstrap({
       owner: 'fork'
     }, function() {
-      if (process.argv.length < 3) {
+      if (process.argv.length < 4) {
         return;
       }
 
       var startModule = require(path.resolve(process.argv[2]));
 
-      _callModule(startModule, function() { });
+      _callModule(startModule, process.argv[3], function() { });
     });
   };
 
