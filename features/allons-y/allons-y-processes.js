@@ -8,8 +8,10 @@ module.exports = function() {
       forever = require('forever-monitor'),
       pidsPath = path.resolve(__dirname, '../../.pids'),
       _this = this,
+      _ids = -1,
       _children = [{
         name: 'Allons-y',
+        id: ++_ids,
         type: 'main',
         startDate: new Date()
       }];
@@ -57,22 +59,22 @@ module.exports = function() {
   _this.liveCommand(['processes', 'p'], 'output the live processes list', function() {
     _this.logInfo('\n► processes:\n\n');
 
-    _children.forEach(function(child, i) {
+    _children.forEach(function(child) {
       console.log([
         '  ■ [' + _logDate(child.startDate) + ']',
         _this.textInfo(child.name),
         (child.processes ? '(' + child.processes.length + ')' : ''),
-        '#' + _this.textWarning(i)
+        '#' + _this.textWarning(child.id)
       ].join(' '));
 
       if (child.processes) {
-        child.processes.forEach(function(p, j) {
+        child.processes.forEach(function(p) {
           console.log([
             '    ∙ [' + _logDate(p.restartDate) + ']',
             _this.textInfo(p.name),
             '(' + child.type + ')',
             '(' + p.forever.times + ' restarts)',
-            '#' + _this.textWarning(i + '.' + j)
+            '#' + _this.textWarning(p.id)
           ].join(' '));
         });
       }
@@ -101,7 +103,7 @@ module.exports = function() {
     for (var i = 0; i < _children.length; i++) {
       var child = _children[i];
 
-      if (i.toString() === id) {
+      if (child.id.toString() === id) {
         found = {
           id: id,
           name: child.name,
@@ -117,7 +119,7 @@ module.exports = function() {
 
       if (child.processes) {
         for (var j = 0; j < child.processes.length; j++) {
-          if (i.toString() + '.' + j.toString() === id) {
+          if (child.processes[j].id.toString() === id) {
             found = {
               id: id,
               name: child.processes[j].name,
@@ -275,6 +277,8 @@ module.exports = function() {
           var count = startModule.fork ? startModule.forkCount : startModule.spawnCount,
               child = {
                 name: startModule.name,
+                id: ++_ids,
+                ids: -1,
                 type: startModule.fork ? 'fork' : 'spawn',
                 startDate: new Date(),
                 processes: []
@@ -285,6 +289,7 @@ module.exports = function() {
 
             var p = {
               name: child.name,
+              id: child.id + '.' + (++child.ids),
               startDate: new Date(),
               restartDate: new Date(),
               forever: startModule.fork ?
