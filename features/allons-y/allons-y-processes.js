@@ -42,18 +42,29 @@ module.exports = function() {
   function _pids() {
     var pids = (fs.existsSync(pidsPath) ? fs.readFileSync(pidsPath, 'utf-8') : '').split('\n');
 
-    if (pids.length && !pids[0]) {
-      pids.splice(0, 1);
+    for (var i = pids.length - 1; i >= 0; i--) {
+      if (!pids[i]) {
+        pids.splice(i, 1);
+      }
+      else {
+        pids[i] = pids[i].split(':');
+      }
     }
 
     return pids;
   }
 
-  function _keepPid(pid) {
+  function _keepPid(pid, processName) {
+    if (!pid || !processName) {
+      return false;
+    }
+
     var pids = fs.existsSync(pidsPath) ? fs.readFileSync(pidsPath, 'utf-8') : '';
-    pids += (pids ? '\n' : '') + pid;
+    pids += (pids ? '\n' : '') + pid + ':' + processName;
 
     fs.writeFileSync(pidsPath, pids);
+
+    return true;
   }
 
   _this.liveCommand(['processes', 'p'], 'output the live processes list', function() {
@@ -266,7 +277,7 @@ module.exports = function() {
       p.forever.restart();
     });
 
-    _keepPid(p.forever.child.pid);
+    _keepPid(p.forever.child.pid, p.name);
   }
 
   this.start = function(dontStopBefore) {
@@ -278,7 +289,7 @@ module.exports = function() {
 
     _this.logBanner();
 
-    _keepPid(process.pid);
+    _keepPid(process.pid, 'Allons-y');
 
     if (!process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true') {
       _this.logInfo('  Live Commands is enabled. Use "help" to display the available commands.\n\n');
@@ -374,10 +385,10 @@ module.exports = function() {
         }
 
         if (!fromStart) {
-          _this.logSuccess('  kill PID ' + pid + '\n');
+          _this.logSuccess('  kill "' + pid[1] + '" (#' + pid[0] + ')\n');
         }
 
-        forever.kill(pid);
+        forever.kill(pid[0]);
       });
 
       _cleanPids();
