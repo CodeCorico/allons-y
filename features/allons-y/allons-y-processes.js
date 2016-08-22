@@ -68,7 +68,7 @@ module.exports = function() {
   }
 
   _this.liveCommand(['processes', 'p'], 'output the live processes list', function() {
-    _this.logInfo('\n► processes:\n\n');
+    _this.outputInfo('\n► processes:\n\n');
 
     _children.forEach(function(child) {
       console.log([
@@ -166,18 +166,18 @@ module.exports = function() {
   };
 
   _this.liveCommand('restart [process]', 'restart a process', function($args) {
-    _this.logInfo('\n► restart:\n\n');
+    _this.outputInfo('\n► restart:\n\n');
 
     var found = _findProcesses($args);
 
     if (found === null) {
-      return _this.logWarning('\n  Set a process id for the "restat" command: restart [process]\n\n');
+      return _this.outputWarning('\n  Set a process id for the "restat" command: restart [process]\n\n');
     }
     else if (found === false) {
-      return _this.logWarning('\n  You cannot restart Allons-y from the Live Commands\n\n');
+      return _this.outputWarning('\n  You cannot restart Allons-y from the Live Commands\n\n');
     }
     else if (found === -1 || !found.processes) {
-      return _this.logWarning('\n  There is no process for this id\n\n');
+      return _this.outputWarning('\n  There is no process for this id\n\n');
     }
 
     for (var i = 0; i < found.processes.length; i++) {
@@ -188,22 +188,22 @@ module.exports = function() {
       }
     }
 
-    _this.logSuccess('\n► process "' + found.name + '" (#' + found.id + ') restarted\n\n');
+    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') restarted\n\n');
   });
 
   _this.liveCommand('kill [process]', 'shutdown a process', function($args) {
-    _this.logInfo('\n► kill:\n\n');
+    _this.outputInfo('\n► kill:\n\n');
 
     var found = _findProcesses($args, true);
 
     if (found === null) {
-      return _this.logWarning('\n  Set a process id for the "kill" command: kill [process]\n\n');
+      return _this.outputWarning('\n  Set a process id for the "kill" command: kill [process]\n\n');
     }
     else if (found === false) {
-      return _this.logWarning('\n  Use the "exit" command to shutdown Allons-y\n\n');
+      return _this.outputWarning('\n  Use the "exit" command to shutdown Allons-y\n\n');
     }
     else if (found === -1 || !found.processes) {
-      return _this.logWarning('\n  There is no process for this id\n\n');
+      return _this.outputWarning('\n  There is no process for this id\n\n');
     }
 
     found.processes.forEach(function(p) {
@@ -215,11 +215,11 @@ module.exports = function() {
       }
     });
 
-    _this.logSuccess('\n► process "' + found.name + '" (#' + found.id + ') terminated\n\n');
+    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') terminated\n\n');
   });
 
   _this.liveCommand('exit', 'shutdown allons-y', function() {
-    _this.logInfo('\n► exit\n\n');
+    _this.outputInfo('\n► exit\n\n');
 
     for (var i = 0; i < _children.length; i++) {
       var child = _children[i];
@@ -268,11 +268,11 @@ module.exports = function() {
 
     p.forever.on('watch:restart', function() {
       p.restartDate = new Date();
-      _this.logInfo('► [Watch] Restart "' + p.name + '" (#' + _this.logWarning(p.id) + ')\n');
+      _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + _this.outputWarning(p.id) + ')\n');
     });
 
     p.watcher.on('change', function() {
-      _this.logInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')\n');
+      _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')\n');
       p.forever.times--;
       p.forever.restart();
     });
@@ -287,12 +287,12 @@ module.exports = function() {
       }, true);
     }
 
-    _this.logBanner();
+    _this.outputBanner();
 
     _keepPid(process.pid, 'Allons-y');
 
     if (!process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true') {
-      _this.logInfo('  Live Commands is enabled. Use "help" to display the available commands.\n\n');
+      _this.outputInfo('  Live Commands is enabled. Use "help" to display the available commands.\n\n');
     }
 
     _this.bootstrap({
@@ -332,7 +332,7 @@ module.exports = function() {
           _children.push(child);
 
           for (var i = 0; i < count; i++) {
-            _this.logInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']\n');
+            _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']\n');
 
             var p = {
               name: child.name,
@@ -374,9 +374,9 @@ module.exports = function() {
       var pids = _pids();
 
       if (!fromStart) {
-        _this.logBanner();
+        _this.outputBanner();
 
-        _this.logInfo('► stop\n\n');
+        _this.outputInfo('► stop\n\n');
       }
 
       pids.forEach(function(pid) {
@@ -385,7 +385,7 @@ module.exports = function() {
         }
 
         if (!fromStart) {
-          _this.logSuccess('  kill "' + pid[1] + '" (#' + pid[0] + ')\n');
+          _this.outputSuccess('  kill "' + pid[1] + '" (#' + pid[0] + ')\n');
         }
 
         forever.kill(pid[0]);

@@ -23,7 +23,7 @@ module.exports = function() {
   };
 
   this.liveCommand(['help', 'h'], 'output usage information', function() {
-    _this.logInfo('\n► help:\n\n');
+    _this.outputInfo('\n► help:\n\n');
 
     var commandsInUse = [],
         commandsLines = [],

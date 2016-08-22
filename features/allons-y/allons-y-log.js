@@ -6,7 +6,7 @@ module.exports = function() {
 
   var _this = this;
 
-  this.logBanner = function(text) {
+  this.outputBanner = function(text) {
     if (Array.isArray(text)) {
       text = text.join('');
     }
@@ -39,15 +39,15 @@ module.exports = function() {
     return color ? color(bar) : bar;
   };
 
-  this.logBar = function(color) {
+  this.outputBar = function(color) {
     console.log(_this.textBar(color));
   };
 
   this.logTitle = function(text) {
     console.log('\n');
-    _this.logBar(_this.colorInfo);
+    _this.outputBar(_this.colorInfo);
     console.log(_this.colorInfo('    ' + text));
-    _this.logBar(_this.colorInfo);
+    _this.outputBar(_this.colorInfo);
   };
 
   this.colorInfo = clc.cyanBright;
@@ -56,7 +56,7 @@ module.exports = function() {
     return _this.colorInfo(text);
   };
 
-  this.logInfo = function(text) {
+  this.outputInfo = function(text) {
     process.stdout.write(_this.textInfo(text));
   };
 
@@ -66,7 +66,7 @@ module.exports = function() {
     return _this.colorWarning(text);
   };
 
-  this.logWarning = function(text) {
+  this.outputWarning = function(text) {
     process.stdout.write(_this.textWarning(text));
   };
 
@@ -76,11 +76,11 @@ module.exports = function() {
     return _this.colorSuccess(text);
   };
 
-  this.logSuccess = function(text) {
+  this.outputSuccess = function(text) {
     process.stdout.write(_this.textSuccess(text));
   };
 
-  this.log = function(text) {
+  this.output = function(text) {
     process.stdout.write(clc.white(text));
   };
 };
