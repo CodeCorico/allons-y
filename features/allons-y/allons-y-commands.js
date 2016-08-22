@@ -13,33 +13,39 @@ module.exports = function() {
   });
 
   function _commands(callback) {
-    var files = _this.findInFeaturesSync('*-allons-y-bootstrap.js'),
-        commands = {},
-        help = [];
+    _this.bootstrap({
+      owner: 'commands'
+    }, function(err, files) {
 
-    async.mapSeries(files, function(file, nextFile) {
+      var commands = {},
+          help = [];
 
-      var bootstrapModule = require(path.resolve(file));
-
-      if (!bootstrapModule.commands) {
-        return nextFile();
-      }
-
-      Object.keys(bootstrapModule.commands).forEach(function(commandName) {
-        commands[commandName] = commands[commandName] || [];
-        commands[commandName].push(bootstrapModule.commands[commandName].command);
-
-        help = help.concat(bootstrapModule.commands[commandName].help);
+      _this.log('allons-y', 'commands-start', {
+        files: files
       });
 
-      nextFile();
+      async.mapSeries(files, function(file, nextFile) {
 
-    }, function(err) {
-      if (err) {
-        throw err;
-      }
+        var bootstrapModule = require(path.resolve(file));
 
-      callback(commands, help);
+        if (!bootstrapModule.commands) {
+          return nextFile();
+        }
+
+        Object.keys(bootstrapModule.commands).forEach(function(commandName) {
+          _this.log('allons-y', 'commands-register:' + commandName);
+
+          commands[commandName] = commands[commandName] || [];
+          commands[commandName].push(bootstrapModule.commands[commandName].command);
+
+          help = help.concat(bootstrapModule.commands[commandName].help);
+        });
+
+        nextFile();
+
+      }, function() {
+        callback(commands, help);
+      });
     });
   }
 
@@ -75,6 +81,8 @@ module.exports = function() {
 
       async.mapSeries(commands[commandFound], function(command, nextCommand) {
 
+        _this.log('allons-y', 'commands-call:' + commandFound);
+
         DependencyInjection.injector.controller.invoke(null, command, {
           controller: {
             $commander: function() {
@@ -88,7 +96,13 @@ module.exports = function() {
         });
 
       }, function(err) {
+        _this.log('allons-y', 'commands-call-done:' + commandFound);
+
         if (err) {
+          _this.logError('allons-y', 'commands-call-error:' + commandFound, {
+            error: err
+          });
+
           throw err;
         }
       });

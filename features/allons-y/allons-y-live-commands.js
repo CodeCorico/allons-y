@@ -66,8 +66,12 @@ module.exports = function() {
     command = args.splice(0, 1);
 
     if (!_commands[command]) {
+      _this.logWarning('allons-y', 'live-commands-unregistered:' + command);
+
       command = 'help';
     }
+
+    _this.log('allons-y', 'live-commands-call:' + command);
 
     DependencyInjection.injector.controller.invoke(null, _commands[command].action, {
       controller: {
@@ -82,6 +86,8 @@ module.exports = function() {
     if (process.env.ALLONSY_LIVE_COMMANDS && process.env.ALLONSY_LIVE_COMMANDS == 'false') {
       return;
     }
+
+    _this.log('allons-y', 'live-commands-start');
 
     var rl = readline.createInterface({
       input: process.stdin,

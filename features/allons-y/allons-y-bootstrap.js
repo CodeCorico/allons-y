@@ -9,6 +9,10 @@ module.exports = function() {
   this.bootstrap = function(options, callback) {
     var files = _this.findInFeaturesSync('*-allons-y-bootstrap.js');
 
+    _this.log('allons-y', 'bootstrap:' + options.owner, {
+      files: files
+    });
+
     async.mapSeries(files, function(file, nextFile) {
 
       var bootstrapModule = require(path.resolve(file));
@@ -23,6 +27,8 @@ module.exports = function() {
         return nextFile();
       }
 
+      _this.log('allons-y', 'bootstrap-exec:' + file);
+
       DependencyInjection.injector.controller.invoke(null, bootstrapModule.bootstrap, {
         controller: {
           $options: function() {
@@ -30,7 +36,17 @@ module.exports = function() {
           },
 
           $done: function() {
-            return nextFile;
+            return function(err) {
+              _this.log('allons-y', 'bootstrap-exec-done:' + file);
+
+              if (err) {
+                _this.logError('allons-y', 'bootstrap-exec-error:' + file, {
+                  error: err
+                });
+              }
+
+              nextFile(err);
+            };
           }
         }
       });
@@ -40,7 +56,7 @@ module.exports = function() {
         throw err;
       }
 
-      callback();
+      callback(null, files);
     });
   };
 

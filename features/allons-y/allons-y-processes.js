@@ -33,9 +33,15 @@ module.exports = function() {
   function _cleanPids() {
     if (fs.existsSync(pidsPath)) {
       try {
+        _this.log('allons-y', 'processes-clean-pids');
+
         fs.unlinkSync(pidsPath);
       }
-      catch (ex) {}
+      catch (err) {
+        _this.logWarning('allons-y', 'processes-clean-pids-error', {
+          error: err
+        });
+      }
     }
   }
 
@@ -54,10 +60,12 @@ module.exports = function() {
     return pids;
   }
 
-  function _keepPid(pid, processName) {
+  function _savePid(pid, processName) {
     if (!pid || !processName) {
       return false;
     }
+
+    _this.log('allons-y', 'processes-pid-save:' + pid + ',' + processName);
 
     var pids = fs.existsSync(pidsPath) ? fs.readFileSync(pidsPath, 'utf-8') : '';
     pids += (pids ? '\n' : '') + pid + ':' + processName;
@@ -171,7 +179,7 @@ module.exports = function() {
     var found = _findProcesses($args);
 
     if (found === null) {
-      return _this.outputWarning('\n  Set a process id for the "restat" command: restart [process]\n\n');
+      return _this.outputWarning('\n  Set a process id for the "restart" command: restart [process]\n\n');
     }
     else if (found === false) {
       return _this.outputWarning('\n  You cannot restart Allons-y from the Live Commands\n\n');
@@ -184,6 +192,8 @@ module.exports = function() {
       var p = found.processes[i];
 
       if (p.forever) {
+        _this.log('allons-y', 'processes-restart:' + p.id + ',' + p.name);
+
         p.forever.restart();
       }
     }
@@ -208,6 +218,8 @@ module.exports = function() {
 
     found.processes.forEach(function(p) {
       if (p.forever) {
+        _this.log('allons-y', 'processes-stop:' + p.id + ',' + p.name);
+
         p.forever.stop();
       }
       if (p.watcher) {
@@ -227,6 +239,8 @@ module.exports = function() {
       if (child.processes && child.processes.length) {
         for (var j = 0; j < child.processes.length; j++) {
           if (child.processes[j].forever) {
+            _this.log('allons-y', 'processes-stop:' + child.processes[j].id + ',' + child.processes[j].name);
+
             child.processes[j].forever.stop();
           }
           if (child.processes[j].watcher) {
@@ -237,6 +251,8 @@ module.exports = function() {
     }
 
     _cleanPids();
+
+    _this.log('allons-y', 'exit');
 
     process.exit();
   });
@@ -277,7 +293,7 @@ module.exports = function() {
       p.forever.restart();
     });
 
-    _keepPid(p.forever.child.pid, p.name);
+    _savePid(p.forever.child.pid, p.name);
   }
 
   this.start = function(dontStopBefore) {
@@ -289,7 +305,7 @@ module.exports = function() {
 
     _this.outputBanner();
 
-    _keepPid(process.pid, 'Allons-y');
+    _savePid(process.pid, 'Allons-y');
 
     if (!process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true') {
       _this.outputInfo('  Live Commands is enabled. Use "help" to display the available commands.\n\n');
@@ -298,8 +314,11 @@ module.exports = function() {
     _this.bootstrap({
       owner: 'start'
     }, function() {
-
       var files = _this.findInFeaturesSync('*-allons-y-start.js');
+
+      _this.log('allons-y', 'start', {
+        files: files
+      });
 
       async.mapSeries(files, function(file, nextFile) {
         var startModule = require(path.resolve(file));
@@ -332,11 +351,15 @@ module.exports = function() {
           _children.push(child);
 
           for (var i = 0; i < count; i++) {
+            var pId = child.id + '.' + (++child.ids);
+
+            _this.log('allons-y', 'processes-' + child.type + '-start:' + pId + ',' + child.name);
+
             _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']\n');
 
             var p = {
               name: child.name,
-              id: child.id + '.' + (++child.ids),
+              id: pId,
               startDate: new Date(),
               restartDate: new Date(),
               watcher: _this.watcher(startModule.name, startModule.watch || null),
@@ -371,6 +394,8 @@ module.exports = function() {
     _this.bootstrap({
       owner: 'stop'
     }, function() {
+      _this.log('allons-y', 'stop');
+
       var pids = _pids();
 
       if (!fromStart) {
@@ -387,6 +412,8 @@ module.exports = function() {
         if (!fromStart) {
           _this.outputSuccess('  kill "' + pid[1] + '" (#' + pid[0] + ')\n');
         }
+
+        _this.log('allons-y', 'processes-stop:' + pid[0] + ',' + pid[1]);
 
         forever.kill(pid[0]);
       });
@@ -412,6 +439,8 @@ module.exports = function() {
       }
 
       var startModule = require(path.resolve(process.argv[2]));
+
+      _this.log('allons-y', 'fork-exec:' + process.argv[3]);
 
       _callModule(startModule, process.argv[3], function() { });
     });

@@ -19,6 +19,8 @@ module.exports = function() {
 
   this.Watcher = function(processName) {
 
+    _this.log('allons-y', 'watcher-create:' + processName);
+
     EventsManager.call(this);
 
     var _watcher = this,
@@ -32,11 +34,17 @@ module.exports = function() {
         return;
       }
 
+      _this.log('allons-y', 'watcher-init:' + processName, {
+        patterns: _patterns
+      });
+
       _chokidarWatcher = chokidar.watch(_patterns, {
         persistent: true
       });
 
       _chokidarWatcher.on('change', function(path, stats) {
+        _this.log('allons-y', 'watcher-change:' + processName);
+
         _watcher.fire('change', {
           path: path,
           stats: stats
@@ -51,7 +59,7 @@ module.exports = function() {
         return;
       }
 
-      var newPatternsFormatted = [];
+      var newFormattedPatterns = [];
 
       newPatterns.forEach(function(pattern) {
         if (_patternsOrigin.indexOf(pattern) > -1) {
@@ -59,10 +67,10 @@ module.exports = function() {
         }
         _patternsOrigin.push(pattern);
 
-        newPatternsFormatted = newPatternsFormatted.concat(_this.globPatterns(pattern));
+        newFormattedPatterns = newFormattedPatterns.concat(_this.globPatterns(pattern));
       });
 
-      _patterns = _patterns.concat(newPatternsFormatted);
+      _patterns = _patterns.concat(newFormattedPatterns);
 
       if (!_patterns.length) {
         return;
@@ -72,11 +80,17 @@ module.exports = function() {
         _init();
       }
       else {
-        _chokidarWatcher.add(newPatternsFormatted);
+        _this.log('allons-y', 'watcher-add:' + processName, {
+          patterns: newFormattedPatterns
+        });
+
+        _chokidarWatcher.add(newFormattedPatterns);
       }
     };
 
     this.stop = function() {
+      _this.log('allons-y', 'watcher-stop:' + processName);
+
       if (_chokidarWatcher) {
         _chokidarWatcher.close();
       }
