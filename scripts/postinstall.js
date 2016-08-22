@@ -9,7 +9,6 @@ var path = require('path'),
 packageJSON.scripts = packageJSON.scripts || {};
 packageJSON.scripts.start = 'node ./node_modules/allons-y/start.js';
 packageJSON.scripts.stop = 'node ./node_modules/allons-y/stop.js';
-packageJSON.scripts['allons-y'] = 'node ./node_modules/allons-y/command.js';
 
 jsonfile.spaces = 2;
 jsonfile.writeFileSync(packageSource, packageJSON, {
