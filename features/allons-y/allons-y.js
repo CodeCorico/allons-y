@@ -14,7 +14,7 @@ module.exports = new (function() {
     return _this;
   }]);
 
-  require(path.resolve(__dirname, 'allons-y-log.js')).apply(this);
+  require(path.resolve(__dirname, 'allons-y-logs.js')).apply(this);
   require(path.resolve(__dirname, 'allons-y-watch.js')).apply(this);
   require(path.resolve(__dirname, 'allons-y-glob.js')).apply(this);
   require(path.resolve(__dirname, 'allons-y-live-commands.js')).apply(this);
