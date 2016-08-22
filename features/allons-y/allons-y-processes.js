@@ -143,6 +143,17 @@ module.exports = function() {
     return found === false ? -1 : found;
   }
 
+  this.childByName = function(name) {
+    for (var i = 0; i < _children.length; i++) {
+      console.log(name, _children[i]);
+      if (_children[i].name == name) {
+        return _children[i];
+      }
+    }
+
+    return null;
+  };
+
   _this.liveCommand('restart [process]', 'restart a process', function($args) {
     _this.logInfo('\n► restart:\n\n');
 
@@ -161,13 +172,9 @@ module.exports = function() {
     for (var i = 0; i < found.processes.length; i++) {
       var p = found.processes[i];
 
-      console.log('before', p.forever.child.pid);
-
       if (p.forever) {
         p.forever.restart();
       }
-
-      console.log('after', p.forever.child.pid);
     }
 
     _this.logSuccess('\n► process "' + found.name + '" (#' + found.id + ') restarted\n\n');
@@ -192,6 +199,9 @@ module.exports = function() {
       if (p.forever) {
         p.forever.stop();
       }
+      if (p.watcher) {
+        p.watcher.stop();
+      }
     });
 
     _this.logSuccess('\n► process "' + found.name + '" (#' + found.id + ') terminated\n\n');
@@ -207,6 +217,9 @@ module.exports = function() {
         for (var j = 0; j < child.processes.length; j++) {
           if (child.processes[j].forever) {
             child.processes[j].forever.stop();
+          }
+          if (child.processes[j].watcher) {
+            child.processes[j].watcher.stop();
           }
         }
       }
@@ -237,8 +250,20 @@ module.exports = function() {
     p.forever.on('restart', function() {
       p.restartDate = new Date();
     });
+
     p.forever.on('exit', function() {
       _findProcesses([p.id], true);
+    });
+
+    p.forever.on('watch:restart', function() {
+      p.restartDate = new Date();
+      _this.logInfo('► [Watch] Restart "' + p.name + '" (#' + _this.logWarning(p.id) + ')\n');
+    });
+
+    p.watcher.on('change', function() {
+      _this.logInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')\n');
+      p.forever.times--;
+      p.forever.restart();
     });
 
     _keepPid(p.forever.child.pid);
@@ -263,7 +288,7 @@ module.exports = function() {
       owner: 'start'
     }, function() {
 
-      var files = _this.findInFeaturesSync('*allons-y-start.js');
+      var files = _this.findInFeaturesSync('*-allons-y-start.js');
 
       async.mapSeries(files, function(file, nextFile) {
         var startModule = require(path.resolve(file));
@@ -293,6 +318,8 @@ module.exports = function() {
                 processes: []
               };
 
+          _children.push(child);
+
           for (var i = 0; i < count; i++) {
             _this.logInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']\n');
 
@@ -301,6 +328,7 @@ module.exports = function() {
               id: child.id + '.' + (++child.ids),
               startDate: new Date(),
               restartDate: new Date(),
+              watcher: _this.watcher(startModule.name, startModule.watch || null),
               forever: startModule.fork ?
                 new (forever.Monitor)('./node_modules/allons-y/fork.js', {
                   max: startModule.forkMaxRestarts,
@@ -315,8 +343,6 @@ module.exports = function() {
 
             child.processes.push(p);
           }
-
-          _children.push(child);
 
           return nextFile();
         }

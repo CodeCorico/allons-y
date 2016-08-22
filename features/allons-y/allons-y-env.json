@@ -3,5 +3,9 @@
     "type": "confirm",
     "name": "ALLONSY_LIVE_COMMANDS",
     "message": "Enable Live commands:"
+  }, {
+    "type": "confirm",
+    "name": "ALLONSY_WATCHER",
+    "message": "Enable the Allons-y Watcher:"
   }]
 }

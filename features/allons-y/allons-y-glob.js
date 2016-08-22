@@ -7,13 +7,6 @@ module.exports = function() {
 
   var _this = this;
 
-  function _patterns(pattern) {
-    return [
-      './features/**/' + pattern,
-      './node_modules/allons-y*/features/**/' + pattern
-    ];
-  }
-
   function _sortByFilePriority(a, b) {
     a = a.split('/').pop();
     b = b.split('/').pop();
@@ -42,6 +35,13 @@ module.exports = function() {
 
     return 0;
   }
+
+  this.globPatterns = function(pattern) {
+    return [
+      './features/**/' + pattern,
+      './node_modules/allons-y*/features/**/' + pattern
+    ];
+  };
 
   this.globSortered = function(patterns, callback) {
     var files = [],
@@ -94,11 +94,11 @@ module.exports = function() {
   };
 
   this.findInFeatures = function(pattern, callback) {
-    _this.globSortered(_patterns(pattern), callback);
+    _this.globSortered(_this.globPatterns(pattern), callback);
   };
 
   this.findInFeaturesSync = function(pattern) {
-    return _this.globSyncSortered(_patterns(pattern));
+    return _this.globSyncSortered(_this.globPatterns(pattern));
   };
 
 };

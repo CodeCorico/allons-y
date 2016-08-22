@@ -7,7 +7,7 @@ module.exports = function() {
       _this = this;
 
   this.bootstrap = function(options, callback) {
-    var files = _this.findInFeaturesSync('*allons-y-bootstrap.js');
+    var files = _this.findInFeaturesSync('*-allons-y-bootstrap.js');
 
     async.mapSeries(files, function(file, nextFile) {
 

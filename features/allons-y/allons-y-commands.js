@@ -13,7 +13,7 @@ module.exports = function() {
   });
 
   function _commands(callback) {
-    var files = _this.findInFeaturesSync('*allons-y-bootstrap.js'),
+    var files = _this.findInFeaturesSync('*-allons-y-bootstrap.js'),
         commands = {},
         help = [];
 
