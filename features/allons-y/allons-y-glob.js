@@ -11,7 +11,7 @@ module.exports = function() {
     a = a.split('/').pop();
     b = b.split('/').pop();
 
-    var priorities = [99999, 99999],
+    var priorities = [50, 50],
         files = [a.split('-'), b.split('-')],
         priority = null;
 
