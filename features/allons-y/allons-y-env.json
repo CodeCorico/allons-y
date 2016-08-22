@@ -1,8 +1,13 @@
 {
   "env": [{
     "type": "confirm",
+    "name": "ALLONSY_LOGS_OUTPUT",
+    "message": "Enable the internal logs output:",
+    "default": false
+  }, {
+    "type": "confirm",
     "name": "ALLONSY_LIVE_COMMANDS",
-    "message": "Enable Live commands:"
+    "message": "Enable the Live commands:"
   }, {
     "type": "confirm",
     "name": "ALLONSY_WATCHER",

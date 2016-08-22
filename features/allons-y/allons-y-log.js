@@ -6,6 +6,52 @@ module.exports = function() {
 
   var _this = this;
 
+  this.LOG_TYPE = {
+    INFO: 'info',
+    WARNING: 'warning',
+    ERROR: 'error'
+  };
+
+  function _logDate(date) {
+    if (!date) {
+      return '';
+    }
+
+    var hours = date.getHours(),
+        minutes = date.getMinutes(),
+        seconds = date.getSeconds();
+
+    return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+  }
+
+  this.log = function(namespace, log, args, type) {
+    log = {
+      namespace: namespace,
+      log: log,
+      type: type || _this.LOG_TYPE.INFO,
+      args: args || null,
+      date: new Date()
+    };
+
+    if (process.env.ALLONSY_LOGS_OUTPUT && process.env.ALLONSY_LOGS_OUTPUT == 'true') {
+      console.log('[' + _logDate(log.date) + '] [' + log.type.toUpperCase() + '] [' + log.namespace + '] ' + log.log);
+
+      if (log.args && log.args.error) {
+        console.log(log.args.error);
+      }
+    }
+
+    _this.fire('log', log);
+  };
+
+  this.logWarning = function(namespace, log, args) {
+    _this.log(namespace, log, args, _this.LOG_TYPE.WARNING);
+  },
+
+  this.logError = function(namespace, log, args) {
+    _this.log(namespace, log, args, _this.LOG_TYPE.ERROR);
+  };
+
   this.outputBanner = function(text) {
     if (Array.isArray(text)) {
       text = text.join('');
@@ -50,6 +96,10 @@ module.exports = function() {
     _this.outputBar(_this.colorInfo);
   };
 
+  this.output = function(text) {
+    process.stdout.write(clc.white(text));
+  };
+
   this.colorInfo = clc.cyanBright;
 
   this.textInfo = function(text) {
@@ -58,16 +108,6 @@ module.exports = function() {
 
   this.outputInfo = function(text) {
     process.stdout.write(_this.textInfo(text));
-  };
-
-  this.colorWarning = clc.yellowBright;
-
-  this.textWarning = function(text) {
-    return _this.colorWarning(text);
-  };
-
-  this.outputWarning = function(text) {
-    process.stdout.write(_this.textWarning(text));
   };
 
   this.colorSuccess = clc.greenBright;
@@ -80,7 +120,23 @@ module.exports = function() {
     process.stdout.write(_this.textSuccess(text));
   };
 
-  this.output = function(text) {
-    process.stdout.write(clc.white(text));
+  this.colorWarning = clc.yellowBright;
+
+  this.textWarning = function(text) {
+    return _this.colorWarning(text);
+  };
+
+  this.outputWarning = function(text) {
+    process.stdout.write(_this.textWarning(text));
+  };
+
+  this.colorError = clc.redBright;
+
+  this.textError = function(text) {
+    return _this.colorError(text);
+  };
+
+  this.outputError = function(text) {
+    process.stdout.write(_this.textError(text));
   };
 };
