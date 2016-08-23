@@ -25,11 +25,11 @@ module.exports = function() {
       }
     }
 
-    if (priorities[0] < priorities[1]) {
+    if (priorities[1] < priorities[0]) {
       return -1;
     }
 
-    if (priorities[0] > priorities[1]) {
+    if (priorities[1] > priorities[0]) {
       return 1;
     }
 
