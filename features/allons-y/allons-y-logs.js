@@ -70,11 +70,9 @@ module.exports = function() {
 
     console.log([
       '\n',
-      clc.red(margin + '       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄    ') + '\n',
-      clc.red(margin + '                                 ') + '\n',
-      clc.red(margin + '             ') + clc.redBright('Allons-y') + '\n',
-      clc.red(margin + '                                 ') + '\n',
-      clc.red(margin + '       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀    ') + '\n\n',
+      clc.red(margin + '       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n\n'),
+      clc.red(margin + '             ') + clc.redBright('Allons-y') + '\n\n',
+      clc.red(margin + '       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n\n'),
       text
     ].join(''));
   };
@@ -97,7 +95,7 @@ module.exports = function() {
   };
 
   this.output = function(text) {
-    process.stdout.write(clc.white(text));
+    process.stdout.write(text);
   };
 
   this.colorInfo = clc.cyanBright;

@@ -2,6 +2,8 @@
 
 module.exports = function() {
 
+var clc = require('cli-color');
+
   var readline = require('readline'),
       _this = this,
       _commands = {};
@@ -82,6 +84,21 @@ module.exports = function() {
     });
   };
 
+  function _prompt(rl) {
+    var prefix = 'allons-y> ';
+
+    if (process.stdout.write('')) {
+      rl.setPrompt(clc.blackBright(prefix), prefix.length);
+      rl.prompt();
+    }
+    else {
+      process.stdout.on('drain', function() {
+        rl.setPrompt(clc.blackBright(prefix), prefix.length);
+        rl.prompt();
+      });
+    }
+  }
+
   this.waitLiveCommand = function() {
     if (process.env.ALLONSY_LIVE_COMMANDS && process.env.ALLONSY_LIVE_COMMANDS == 'false') {
       return;
@@ -95,12 +112,18 @@ module.exports = function() {
     });
 
     rl.on('line', function(line) {
+      line = line.trim();
+
       if (!line) {
         return;
       }
 
       _this.calliveCommand(line);
+
+      _prompt(rl);
     });
+
+    _prompt(rl);
   };
 
 };
