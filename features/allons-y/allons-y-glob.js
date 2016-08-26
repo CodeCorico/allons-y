@@ -1,7 +1,8 @@
 'use strict';
 
 var glob = require('glob'),
-    async = require('async');
+    async = require('async'),
+    path = require('path');
 
 module.exports = function() {
 
@@ -99,6 +100,24 @@ module.exports = function() {
 
   this.findInFeaturesSync = function(pattern) {
     return _this.globSyncSortered(_this.globPatterns(pattern));
+  };
+
+  this.requireInFeatures = function(file, execute) {
+    execute = typeof execute != 'boolean' ? true : execute;
+
+    if (['.js', '.json'].indexOf(file.split('.').pop()) < 0) {
+      file += '.js';
+    }
+
+    var files = _this.findInFeaturesSync(file);
+
+    files.forEach(function(file) {
+      var fileModule = require(path.resolve(file));
+
+      if (execute) {
+        fileModule();
+      }
+    });
   };
 
 };

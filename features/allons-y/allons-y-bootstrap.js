@@ -19,6 +19,10 @@ module.exports = function() {
 
       if (bootstrapModule.liveCommands) {
         bootstrapModule.liveCommands.forEach(function(liveCommand) {
+          if (!liveCommand) {
+            return;
+          }
+
           _this.liveCommand(liveCommand.commands, liveCommand.description, liveCommand.action);
         });
       }
