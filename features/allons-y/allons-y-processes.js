@@ -6,9 +6,13 @@ module.exports = function() {
       fs = require('fs'),
       async = require('async'),
       forever = require('forever-monitor'),
+      uuid = require('node-uuid'),
       pidsPath = path.resolve(__dirname, '../../.pids'),
       _this = this,
+      _isMain = false,
+      _isFork = false,
       _ids = -1,
+      _messagesCallbacks = {},
       _children = [{
         name: 'Allons-y',
         id: ++_ids,
@@ -164,13 +168,39 @@ module.exports = function() {
 
   this.childByName = function(name) {
     for (var i = 0; i < _children.length; i++) {
-      console.log(name, _children[i]);
       if (_children[i].name == name) {
         return _children[i];
       }
     }
 
     return null;
+  };
+
+  this.sendMessage = function(message, callback) {
+    message = message || {};
+    message = typeof message == 'object' ? message : {
+      event: message
+    };
+
+    if (callback) {
+      message.messageId = uuid.v1();
+      _messagesCallbacks[message.messageId] = callback;
+    }
+
+    if (_isMain) {
+      _children.forEach(function(child) {
+        if (!child.processes) {
+          return;
+        }
+
+        child.processes.forEach(function(p) {
+          p.forever.send(message);
+        });
+      });
+    }
+    else if (_isFork) {
+      process.send(message);
+    }
   };
 
   _this.liveCommand('restart [process]', 'restart a process', function($args) {
@@ -273,7 +303,29 @@ module.exports = function() {
     });
   }
 
-  function _processEvents(p) {
+  function _messageReceived(message, child, p) {
+    message = message || {};
+    if (typeof message != 'object') {
+      message = {
+        event: message
+      };
+    }
+
+    if (child) {
+      message.child = child;
+      message.p = p;
+    }
+
+    if (message.messageId && _messagesCallbacks[message.messageId]) {
+      _messagesCallbacks[message.messageId](message);
+
+      delete _messagesCallbacks[message.messageId];
+    }
+
+    _this.fire('message', message);
+  }
+
+  function _processEvents(p, child) {
     p.forever.on('restart', function() {
       p.restartDate = new Date();
     });
@@ -287,6 +339,10 @@ module.exports = function() {
       _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + _this.outputWarning(p.id) + ')\n');
     });
 
+    p.forever.on('message', function(message) {
+      _messageReceived(message, child, p);
+    });
+
     p.watcher.on('change', function() {
       _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')\n');
       p.forever.times--;
@@ -296,7 +352,11 @@ module.exports = function() {
     _savePid(p.forever.child.pid, p.name);
   }
 
+  process.on('message', _messageReceived);
+
   this.start = function(dontStopBefore) {
+    _isMain = true;
+
     if (!dontStopBefore) {
       return _this.stop(function() {
         _this.start(true);
@@ -365,6 +425,7 @@ module.exports = function() {
               watcher: _this.watcher(startModule.name, startModule.watch || null),
               forever: startModule.fork ?
                 new (forever.Monitor)('./node_modules/allons-y/fork.js', {
+                  fork: true,
                   max: startModule.forkMaxRestarts,
                   args: [file, i]
                 }).start() :
@@ -373,7 +434,7 @@ module.exports = function() {
                 })
             };
 
-            _processEvents(p);
+            _processEvents(p, child);
 
             child.processes.push(p);
           }
@@ -431,6 +492,8 @@ module.exports = function() {
   };
 
   this.fork = function() {
+    _isFork = true;
+
     _this.bootstrap({
       owner: 'fork'
     }, function() {
