@@ -10,9 +10,9 @@ module.exports = new (function() {
 
   EventsManager.call(this);
 
-  DependencyInjection.service('$allonsy', [function() {
+  DependencyInjection.service('$allonsy', function() {
     return _this;
-  }]);
+  });
 
   require(path.resolve(__dirname, 'allons-y-logs.js')).apply(this);
   require(path.resolve(__dirname, 'allons-y-watch.js')).apply(this);

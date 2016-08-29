@@ -105,11 +105,12 @@ module.exports = function() {
   this.requireInFeatures = function(file, execute) {
     execute = typeof execute != 'boolean' ? true : execute;
 
-    if (['.js', '.json'].indexOf(file.split('.').pop()) < 0) {
+    if (['js', 'json'].indexOf(file.split('.').pop()) < 0) {
       file += '.js';
     }
 
-    var files = _this.findInFeaturesSync(file);
+    var files = _this.findInFeaturesSync(file),
+        modules = null;
 
     files.forEach(function(file) {
       var fileModule = require(path.resolve(file));
@@ -117,7 +118,19 @@ module.exports = function() {
       if (execute) {
         fileModule();
       }
+
+      modules.push(fileModule);
     });
+
+    if (!modules.length) {
+      return null;
+    }
+
+    if (modules.length == 1) {
+      return modules[0];
+    }
+
+    return modules;
   };
 
 };
