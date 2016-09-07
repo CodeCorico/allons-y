@@ -287,17 +287,11 @@ module.exports = function() {
     process.exit();
   });
 
-  function _callModule(startModule, index, nextFile) {
-    index = parseInt(index, 10);
-
+  function _callModule(startModule, callback) {
     DependencyInjection.injector.controller.invoke(null, startModule.module, {
       controller: {
-        $index: function() {
-          return index;
-        },
-
         $done: function() {
-          return nextFile;
+          return callback || function() {};
         }
       }
     });
@@ -442,7 +436,7 @@ module.exports = function() {
           return nextFile();
         }
 
-        _callModule(startModule, 0, nextFile);
+        _callModule(startModule, nextFile);
       }, function() {
 
         _this.waitLiveCommand();
@@ -505,7 +499,11 @@ module.exports = function() {
 
       _this.log('allons-y', 'fork-exec:' + process.argv[3]);
 
-      _callModule(startModule, process.argv[3], function() { });
+      DependencyInjection.service('$processIndex', function() {
+        return parseInt(process.argv[3], 10);
+      });
+
+      _callModule(startModule);
     });
   };
 
