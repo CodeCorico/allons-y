@@ -33,7 +33,13 @@ module.exports = function() {
       date: new Date()
     };
 
-    if (process.env.ALLONSY_LOGS_OUTPUT && process.env.ALLONSY_LOGS_OUTPUT == 'true') {
+    if (
+      process.env.ALLONSY_LOGS_OUTPUT &&
+      (process.env.ALLONSY_LOGS_OUTPUT == 'all' ||
+        (process.env.ALLONSY_LOGS_OUTPUT == 'err' && log.type == this.LOG_TYPE.ERROR) ||
+        (process.env.ALLONSY_LOGS_OUTPUT == 'warn' && (log.type == this.LOG_TYPE.ERROR || log.type == this.LOG_TYPE.WARNING))
+      )
+    ) {
       console.log('[' + _logDate(log.date) + '] [' + log.type.toUpperCase() + '] [' + log.namespace + '] ' + log.log);
 
       if (log.args && log.args.error) {

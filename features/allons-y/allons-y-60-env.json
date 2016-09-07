@@ -1,9 +1,9 @@
 {
   "env": [{
-    "type": "confirm",
+    "type": "input",
     "name": "ALLONSY_LOGS_OUTPUT",
-    "message": "Enable the internal logs output:",
-    "default": false
+    "message": "Enable the internal logs output (\"err\", \"warn\", \"all\" or \"none\"):",
+    "default": "none"
   }, {
     "type": "confirm",
     "name": "ALLONSY_LIVE_COMMANDS",
