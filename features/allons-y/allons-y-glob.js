@@ -37,10 +37,12 @@ module.exports = function() {
     return 0;
   }
 
+  this.glob = glob;
+
   this.globPatterns = function(pattern) {
     return [
-      './features/**/' + pattern,
-      './node_modules/allons-y*/features/**/' + pattern
+      './features/*/' + pattern,
+      './node_modules/allons-y*/features/*/' + pattern
     ];
   };
 
@@ -110,7 +112,7 @@ module.exports = function() {
     }
 
     var files = _this.findInFeaturesSync(file),
-        modules = null;
+        modules = [];
 
     files.forEach(function(file) {
       var fileModule = require(path.resolve(file));
