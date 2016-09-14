@@ -7,6 +7,7 @@ module.exports = function() {
       async = require('async'),
       forever = require('forever-monitor'),
       uuid = require('node-uuid'),
+      stream = require('stream'),
       pidsPath = path.resolve(__dirname, '../../.pids'),
       _this = this,
       _isMain = false,
@@ -18,7 +19,16 @@ module.exports = function() {
         id: ++_ids,
         type: 'main',
         startDate: new Date()
-      }];
+      }],
+      childrenStdout = new stream.Writable();
+
+  childrenStdout._write = function(data, encoding, callback) {
+    data = data.toString();
+
+    _this.output(data);
+
+    callback();
+  };
 
   function _logDate(date) {
     if (!date) {
@@ -80,30 +90,28 @@ module.exports = function() {
   }
 
   _this.liveCommand(['processes', 'p'], 'output the live processes list', function() {
-    _this.outputInfo('\n► processes:\n\n');
+    _this.outputInfo('\n► processes:\n');
 
     _children.forEach(function(child) {
-      console.log([
+      _this.output([
         '  ■ [' + _logDate(child.startDate) + ']',
         _this.textInfo(child.name),
         (child.processes ? '(' + child.processes.length + ')' : ''),
         '#' + _this.textWarning(child.id)
-      ].join(' '));
+      ].join(' '), '\n');
 
       if (child.processes) {
         child.processes.forEach(function(p) {
-          console.log([
+          _this.output([
             '    ∙ [' + _logDate(p.restartDate) + ']',
             _this.textInfo(p.name),
             '(' + child.type + ')',
             '(' + p.forever.times + ' restarts)',
             '#' + _this.textWarning(p.id)
-          ].join(' '));
+          ].join(' '), '\n');
         });
       }
     });
-
-    console.log('');
   });
 
   function _findProcesses($args, splice) {
@@ -204,18 +212,18 @@ module.exports = function() {
   };
 
   _this.liveCommand('restart [process]', 'restart a process', function($args) {
-    _this.outputInfo('\n► restart:\n\n');
+    _this.outputInfo('\n► restart:\n');
 
     var found = _findProcesses($args);
 
     if (found === null) {
-      return _this.outputWarning('\n  Set a process id for the "restart" command: restart [process]\n\n');
+      return _this.outputWarning('  Set a process id for the "restart" command: restart [process]');
     }
     else if (found === false) {
-      return _this.outputWarning('\n  You cannot restart Allons-y from the Live Commands\n\n');
+      return _this.outputWarning('  You cannot restart Allons-y from the Live Commands');
     }
     else if (found === -1 || !found.processes) {
-      return _this.outputWarning('\n  There is no process for this id\n\n');
+      return _this.outputWarning('  There is no process for this id');
     }
 
     for (var i = 0; i < found.processes.length; i++) {
@@ -228,22 +236,22 @@ module.exports = function() {
       }
     }
 
-    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') restarted\n\n');
+    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') restarted');
   });
 
   _this.liveCommand('kill [process]', 'shutdown a process', function($args) {
-    _this.outputInfo('\n► kill:\n\n');
+    _this.outputInfo('\n► kill:\n');
 
     var found = _findProcesses($args, true);
 
     if (found === null) {
-      return _this.outputWarning('\n  Set a process id for the "kill" command: kill [process]\n\n');
+      return _this.outputWarning('  Set a process id for the "kill" command: kill [process]');
     }
     else if (found === false) {
-      return _this.outputWarning('\n  Use the "exit" command to shutdown Allons-y\n\n');
+      return _this.outputWarning('  Use the "exit" command to shutdown Allons-y');
     }
     else if (found === -1 || !found.processes) {
-      return _this.outputWarning('\n  There is no process for this id\n\n');
+      return _this.outputWarning('  There is no process for this id');
     }
 
     found.processes.forEach(function(p) {
@@ -257,11 +265,11 @@ module.exports = function() {
       }
     });
 
-    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') terminated\n\n');
+    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') terminated');
   });
 
   _this.liveCommand('exit', 'shutdown allons-y', function() {
-    _this.outputInfo('\n► exit\n\n');
+    _this.outputInfo('\n► exit\n');
 
     for (var i = 0; i < _children.length; i++) {
       var child = _children[i];
@@ -298,12 +306,9 @@ module.exports = function() {
   }
 
   function _messageReceived(message, child, p) {
-    message = message || {};
-    if (typeof message != 'object') {
-      message = {
-        event: message
-      };
-    }
+    message = typeof message == 'object' ? message : {
+      event: message
+    };
 
     if (child) {
       message.child = child;
@@ -330,15 +335,17 @@ module.exports = function() {
 
     p.forever.on('watch:restart', function() {
       p.restartDate = new Date();
-      _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + _this.outputWarning(p.id) + ')\n');
+      _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + _this.outputWarning(p.id) + ')');
     });
 
     p.forever.on('message', function(message) {
       _messageReceived(message, child, p);
     });
 
+    p.forever.child.stdout.pipe(childrenStdout);
+
     p.watcher.on('change', function() {
-      _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')\n');
+      _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')');
       p.forever.times--;
       p.forever.restart();
     });
@@ -357,12 +364,14 @@ module.exports = function() {
       }, true);
     }
 
+    _this.startLiveCommand();
+
     _this.outputBanner();
 
     _savePid(process.pid, 'Allons-y');
 
     if (!process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true') {
-      _this.outputInfo('  Live Commands is enabled. Use "help" to display the available commands.\n\n');
+      _this.outputSuccess('  Live Commands is enabled. Use "help" to display the available commands.\n');
     }
 
     _this.bootstrap({
@@ -409,7 +418,7 @@ module.exports = function() {
 
             _this.log('allons-y', 'processes-' + child.type + '-start:' + pId + ',' + child.name);
 
-            _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']\n');
+            _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']');
 
             var p = {
               name: child.name,
@@ -420,11 +429,15 @@ module.exports = function() {
               forever: startModule.fork ?
                 new (forever.Monitor)('./node_modules/allons-y/fork.js', {
                   fork: true,
+                  silent: true,
                   max: startModule.forkMaxRestarts,
-                  args: [file, i]
+                  args: [file, i],
+                  stdio: ['pipe', 'pipe', 'pipe', 'ipc']
                 }).start() :
                 forever.start(startModule.spawnCommands, {
-                  max: startModule.spawnMaxRestarts
+                  max: startModule.spawnMaxRestarts,
+                  silent: true,
+                  stdio: ['pipe', 'pipe', 'pipe', 'ipc']
                 })
             };
 
@@ -437,10 +450,6 @@ module.exports = function() {
         }
 
         _callModule(startModule, nextFile);
-      }, function() {
-
-        _this.waitLiveCommand();
-
       });
     });
   };
@@ -456,7 +465,7 @@ module.exports = function() {
       if (!fromStart) {
         _this.outputBanner();
 
-        _this.outputInfo('► stop\n\n');
+        _this.outputInfo('► stop\n');
       }
 
       pids.forEach(function(pid) {
@@ -465,7 +474,7 @@ module.exports = function() {
         }
 
         if (!fromStart) {
-          _this.outputSuccess('  kill "' + pid[1] + '" (#' + pid[0] + ')\n');
+          _this.outputSuccess('  kill "' + pid[1] + '" (#' + pid[0] + ')');
         }
 
         _this.log('allons-y', 'processes-stop:' + pid[0] + ',' + pid[1]);
@@ -474,10 +483,6 @@ module.exports = function() {
       });
 
       _cleanPids();
-
-      if (!fromStart) {
-        console.log('');
-      }
 
       if (callback) {
         callback();

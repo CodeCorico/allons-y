@@ -1,10 +1,11 @@
 'use strict';
 
-var clc = require('cli-color');
-
 module.exports = function() {
 
-  var _this = this;
+  var clc = require('cli-color'),
+      util = require('util'),
+      _this = this,
+      _stdoutWrite = process.stdout.write;
 
   this.LOG_TYPE = {
     INFO: 'info',
@@ -24,6 +25,10 @@ module.exports = function() {
     return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
   }
 
+  this.output = function() {
+    _stdoutWrite.apply(process.stdout, [util.format.apply(process, arguments)]);
+  };
+
   this.log = function(namespace, log, args, type) {
     log = {
       namespace: namespace,
@@ -40,10 +45,10 @@ module.exports = function() {
         (process.env.ALLONSY_LOGS_OUTPUT == 'warn' && (log.type == this.LOG_TYPE.ERROR || log.type == this.LOG_TYPE.WARNING))
       )
     ) {
-      console.log('[' + _logDate(log.date) + '] [' + log.type.toUpperCase() + '] [' + log.namespace + '] ' + log.log);
+      _this.output('[' + _logDate(log.date) + '] [' + log.type.toUpperCase() + '] [' + log.namespace + '] ' + log.log);
 
       if (log.args && log.args.error) {
-        console.log(log.args.error);
+        _this.output(log.args.error);
       }
     }
 
@@ -74,7 +79,7 @@ module.exports = function() {
       margin = fillCharasNb > 0 ? new Array(Math.floor((clc.windowSize.width - bannerWidth) / 2)).join(' ') : '';
     }
 
-    console.log([
+    _this.output([
       '\n',
       clc.red(margin + '       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n\n'),
       clc.red(margin + '             ') + clc.redBright('Allons-y') + '\n\n',
@@ -90,18 +95,14 @@ module.exports = function() {
   };
 
   this.outputBar = function(color) {
-    console.log(_this.textBar(color));
+    _this.output(_this.textBar(color));
   };
 
   this.logTitle = function(text) {
-    console.log('\n');
+    _this.output('\n\n');
     _this.outputBar(_this.colorInfo);
-    console.log(_this.colorInfo('    ' + text));
+    _this.output(_this.colorInfo('    ' + text));
     _this.outputBar(_this.colorInfo);
-  };
-
-  this.output = function(text) {
-    process.stdout.write(text);
   };
 
   this.colorInfo = clc.cyanBright;
@@ -110,8 +111,8 @@ module.exports = function() {
     return _this.colorInfo(text);
   };
 
-  this.outputInfo = function(text) {
-    process.stdout.write(_this.textInfo(text));
+  this.outputInfo = function(text, breakline) {
+    _this.output(_this.textInfo(text) + (typeof breakline == 'undefined' || breakline ? '\n' : ''));
   };
 
   this.colorSuccess = clc.greenBright;
@@ -120,8 +121,8 @@ module.exports = function() {
     return _this.colorSuccess(text);
   };
 
-  this.outputSuccess = function(text) {
-    process.stdout.write(_this.textSuccess(text));
+  this.outputSuccess = function(text, breakline) {
+    _this.output(_this.textSuccess(text) + (typeof breakline == 'undefined' || breakline ? '\n' : ''));
   };
 
   this.colorWarning = clc.yellowBright;
@@ -130,8 +131,8 @@ module.exports = function() {
     return _this.colorWarning(text);
   };
 
-  this.outputWarning = function(text) {
-    process.stdout.write(_this.textWarning(text));
+  this.outputWarning = function(text, breakline) {
+    _this.output(_this.textWarning(text) + (typeof breakline == 'undefined' || breakline ? '\n' : ''));
   };
 
   this.colorError = clc.redBright;
@@ -140,7 +141,7 @@ module.exports = function() {
     return _this.colorError(text);
   };
 
-  this.outputError = function(text) {
-    process.stdout.write(_this.textError(text));
+  this.outputError = function(text, breakline) {
+    _this.output(_this.textError(text) + (typeof breakline == 'undefined' || breakline ? '\n' : ''));
   };
 };

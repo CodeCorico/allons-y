@@ -1,6 +1,6 @@
 'use strict';
 
-GLOBAL.DependencyInjection = require('mvw-injection').MVC();
+global.DependencyInjection = require('mvw-injection').MVC();
 
 module.exports = new (function() {
 

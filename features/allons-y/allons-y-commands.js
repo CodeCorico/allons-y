@@ -8,8 +8,8 @@ module.exports = function() {
       packageInfos = require(path.resolve(__dirname, '../../package.json'));
 
   this.liveCommand(['version', 'v'], 'output allons-y version', function() {
-    _this.outputInfo('\n► version:\n\n');
-    console.log('  ' + packageInfos.name + ' ' + packageInfos.version + '\n');
+    _this.outputInfo('\n► version:\n');
+    _this.output('  ' + packageInfos.name + ' ' + packageInfos.version + '\n');
   });
 
   function _commands(callback) {
