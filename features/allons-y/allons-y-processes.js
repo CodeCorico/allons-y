@@ -90,7 +90,7 @@ module.exports = function() {
   }
 
   _this.liveCommand(['processes', 'p'], 'output the live processes list', function() {
-    _this.outputInfo('\n► processes:\n');
+    _this.outputInfo('► processes:\n');
 
     _children.forEach(function(child) {
       _this.output([
@@ -212,7 +212,7 @@ module.exports = function() {
   };
 
   _this.liveCommand('restart [process]', 'restart a process', function($args) {
-    _this.outputInfo('\n► restart:\n');
+    _this.outputInfo('► restart:\n');
 
     var found = _findProcesses($args);
 
@@ -240,7 +240,7 @@ module.exports = function() {
   });
 
   _this.liveCommand('kill [process]', 'shutdown a process', function($args) {
-    _this.outputInfo('\n► kill:\n');
+    _this.outputInfo('► kill:\n');
 
     var found = _findProcesses($args, true);
 
@@ -269,7 +269,7 @@ module.exports = function() {
   });
 
   _this.liveCommand('exit', 'shutdown allons-y', function() {
-    _this.outputInfo('\n► exit\n');
+    _this.outputInfo('► exit');
 
     for (var i = 0; i < _children.length; i++) {
       var child = _children[i];
@@ -343,6 +343,7 @@ module.exports = function() {
     });
 
     p.forever.child.stdout.pipe(childrenStdout);
+    p.forever.child.stderr.pipe(childrenStdout);
 
     p.watcher.on('change', function() {
       _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')');

@@ -26,7 +26,7 @@ module.exports = function() {
   };
 
   this.liveCommand(['help', 'h'], 'output usage information', function() {
-    _this.outputInfo('\n► help:\n');
+    _this.outputInfo('► help:\n');
 
     var commandsInUse = [],
         commandsLines = [],
@@ -160,7 +160,7 @@ module.exports = function() {
       _output(text);
 
       if (_workings.length) {
-        _output('\n' + _this.textInfo('▄▄▄▄ Working') + '\n\n');
+        _output('\n▄▄▄▄ Working\n\n');
 
         _workings.forEach(function(line) {
           _output(line);
