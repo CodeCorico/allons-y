@@ -292,6 +292,8 @@ module.exports = function() {
 
     _this.log('allons-y', 'exit');
 
+    _this.cleanPrompt();
+
     process.exit();
   });
 

@@ -7,7 +7,13 @@ module.exports = function() {
       util = require('util'),
       _this = this,
       _commands = {},
-      _prefix = 'allons-y> ';
+      _prefix = 'allons-y> ',
+      _enabled = !process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true',
+      _output = _this.output;
+
+  this.liveCommands = function() {
+    return _commands;
+  };
 
   this.liveCommand = function(commands, description, action) {
     if (!Array.isArray(commands)) {
@@ -99,8 +105,16 @@ module.exports = function() {
     }
   }
 
+  this.cleanPrompt = function() {
+    if (!_enabled) {
+      return;
+    }
+
+    _output('\x1b[2K');
+  };
+
   this.startLiveCommand = function() {
-    if (process.env.ALLONSY_LIVE_COMMANDS && process.env.ALLONSY_LIVE_COMMANDS == 'false') {
+    if (!_enabled) {
       return;
     }
 
@@ -111,8 +125,7 @@ module.exports = function() {
       output: process.stdout
     });
 
-    var _output = _this.output,
-        _workingsObj = {},
+    var _workingsObj = {},
         _workings = [];
 
     _output('\n');
