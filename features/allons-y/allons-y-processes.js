@@ -434,7 +434,7 @@ module.exports = function() {
                   fork: true,
                   silent: true,
                   max: startModule.forkMaxRestarts,
-                  args: [file, i],
+                  args: [file, i, startModule.name],
                   stdio: ['pipe', 'pipe', 'pipe', 'ipc']
                 }).start() :
                 forever.start(startModule.spawnCommands, {
@@ -496,20 +496,26 @@ module.exports = function() {
   this.fork = function() {
     _isFork = true;
 
-    _this.bootstrap({
-      owner: 'fork'
-    }, function() {
-      if (process.argv.length < 4) {
-        return;
-      }
+    if (process.argv.length < 4) {
+      return;
+    }
 
+    DependencyInjection.service('$processIndex', function() {
+      return parseInt(process.argv[3], 10);
+    });
+
+    DependencyInjection.service('$processName', function() {
+      return parseInt(process.argv[4], 10);
+    });
+
+    _this.bootstrap({
+      owner: 'fork',
+      processIndex: process.argv[3],
+      processName: process.argv[4]
+    }, function() {
       var startModule = require(path.resolve(process.argv[2]));
 
-      _this.log('allons-y', 'fork-exec:' + process.argv[3]);
-
-      DependencyInjection.service('$processIndex', function() {
-        return parseInt(process.argv[3], 10);
-      });
+      _this.log('allons-y', 'fork-exec:' + process.argv[4] + ':' + process.argv[3]);
 
       _callModule(startModule);
     });
