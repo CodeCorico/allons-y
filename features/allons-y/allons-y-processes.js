@@ -421,7 +421,7 @@ module.exports = function() {
 
             _this.log('allons-y', 'processes-' + child.type + '-start:' + pId + ',' + child.name);
 
-            _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + ' [' + (i + 1) + '/' + count + ']');
+            _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + (count > 1 ? ' [' + (i + 1) + '/' + count + ']' : ''));
 
             var p = {
               name: child.name,

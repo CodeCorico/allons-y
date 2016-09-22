@@ -2,7 +2,7 @@
   "env": [{
     "type": "input",
     "name": "ALLONSY_LOGS_OUTPUT",
-    "message": "Enable the internal logs output (\"err\", \"warn\", \"all\" or \"none\"):",
+    "message": "Enable the live logs output (\"err\", \"warn\", \"all\" or \"none\"):",
     "default": "none"
   }, {
     "type": "confirm",
