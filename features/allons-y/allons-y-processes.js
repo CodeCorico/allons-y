@@ -236,7 +236,7 @@ module.exports = function() {
       }
     }
 
-    _this.outputSuccess('\n► process "' + found.name + '" (#' + found.id + ') restarted');
+    _this.outputSuccess('► process "' + found.name + '" (#' + found.id + ') restarted');
   });
 
   _this.liveCommand('kill [process]', 'shutdown a process', function($args) {
@@ -326,6 +326,16 @@ module.exports = function() {
     _this.fire('message', message);
   }
 
+  function _processChildEvents(p) {
+    p.forever.child.stdout.pipe(childrenStdout, {
+      end: false
+    });
+
+    p.forever.child.stderr.pipe(childrenStdout, {
+      end: false
+    });
+  }
+
   function _processEvents(p, child) {
     p.forever.on('restart', function() {
       p.restartDate = new Date();
@@ -344,14 +354,17 @@ module.exports = function() {
       _messageReceived(message, child, p);
     });
 
-    p.forever.child.stdout.pipe(childrenStdout);
-    p.forever.child.stderr.pipe(childrenStdout);
+    p.forever.on('restart', function() {
+      _processChildEvents(p);
+    });
 
     p.watcher.on('change', function() {
       _this.outputInfo('► [Watch] Restart "' + p.name + '" (#' + p.id + ')');
       p.forever.times--;
       p.forever.restart();
     });
+
+    _processChildEvents(p);
 
     _savePid(p.forever.child.pid, p.name);
   }
