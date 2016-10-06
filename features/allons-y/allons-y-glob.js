@@ -37,7 +37,9 @@ module.exports = function() {
     return 0;
   }
 
-  this.glob = glob;
+  DependencyInjection.service('$glob', function() {
+    return glob;
+  });
 
   this.globPatterns = function(pattern) {
     return [
