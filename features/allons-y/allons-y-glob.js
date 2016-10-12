@@ -43,8 +43,8 @@ module.exports = function() {
 
   this.globPatterns = function(pattern) {
     return [
-      './features/*/' + pattern,
-      './node_modules/allons-y*/features/*/' + pattern
+      './node_modules/allons-y*/features/*/' + pattern,
+      './features/*/' + pattern
     ];
   };
 
