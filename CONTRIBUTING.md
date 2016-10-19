@@ -26,54 +26,34 @@ If you are subject to or witness unacceptable behavior, or have any other concer
 
 ## <a name="question"></a> Got a Question or Problem?
 
-If you have questions about how to use Allons-y, please direct these to hello@codecorico.com.
+Please, do not open issues for the general support questions as we want to keep GitHub issues for bug reports and feature requests. You've got much better chances of getting your question answered on [StackOverflow](stackoverflow.com/questions/tagged/allons-y) where the questions should be tagged with tag `allons-y`.
+
+StackOverflow is a much better place to ask questions since:
+
+- there are thousands of people willing to help on StackOverflow
+- questions and answers stay available for public viewing so your question / answer might help someone else
+- StackOverflow's voting system assures that the best answers are prominently visible.
+
+To save your and our time we will be systematically closing all the issues that are requests for general support and redirecting people to StackOverflow.
+
+If you would like to chat about the question in real-time, you can reach out via [our gitter channel][https://gitter.im/CodeCorico/allons-y].
 
 ## <a name="issue"></a> Found an Issue?
-If you find a bug in the source code or a mistake in the wiki, you can help us by
-submitting an issue to the [GitHub Repository](https://github.com/CodeCorico/allons-y/issues). Even better you can submit a Pull Request with a fix.
-
-**Please see the Submission Guidelines below**.
+If you find a bug in the source code, you can help us by
+[submitting an issue](#submit-issue) to our [GitHub Repository][https://github.com/CodeCorico/allons-y]. Even better, you can
+[submit a Pull Request](#submit-pr) with a fix.
 
 ## <a name="feature"></a> Want a Feature?
-You can request a new feature by submitting an issue to the [GitHub Repository](https://github.com/CodeCorico/allons-y). If you
-would like to implement a new feature then consider what kind of change it is:
+You can request a new feature by submitting an issue to the [GitHub Repository](https://github.com/CodeCorico/allons-y/issues). If you would like to implement a new feature then consider what kind of change it is:
 
 * **Major Changes** that you wish to contribute to the project should be discussed first with us so that we can better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
-* **Small Changes** can be crafted and submitted to the [GitHub Repository](https://github.com/CodeCorico/allons-y) as a Pull Request.
+* **Small Changes** can be crafted and submitted to the [GitHub Repository](https://github.com/CodeCorico/allons-y/pulls) as a Pull Request.
 
 A new issue create a discussion thread. Other contributors can advise and contribute to your ideas. Please search whether the subject does not already exists on the [opened issues](https://github.com/CodeCorico/allons-y/issues?q=is%3Aopen+is%3Aissue) before that to prevent duplicates issues.
 
-### Write a _How to reproduce_ for a bug
-
-We have a _Bug issue pattern_ that all contributor should use. When you create a new bug issue, use this format to explain your unexpected behavior:
-
-```
-**Bug**
-<BLANK LINE>
-The description of your bug
-<BLANK LINE>
-**How to reproduce**
-<BLANK LINE>
-How to reproduce your bug, step by step.
-More information you add, the faster the bug will be
-understood by other agents and corrected.
-```
-
-### Write a User Story for a new feature
-
-To help us understand what is your needs you have to use the [User Story](http://en.wikipedia.org/wiki/User_story) pattern.
-
-In Allons-y, a feature needs to be in a _user story_ format that represent user's real expectations. When you create a new issue, use this format to explain your request:
-
-```
-As a <role> I want <goal/desire> so that <benefit>
-```
-
-Describe with details your role, like _daily user_ or _windows developer_ and don't forget the benefit. You can add other informations to be more understanding. Optionnaly you can add a list of **technical criteria** with actions to do.
-
 ## <a name="submit"></a> Submission Guidelines
 
-### Submitting an Issue
+### <a name="submit-issue"></a> Submitting an Issue
 Before you submit your issue please search the archive, maybe your question was already answered.
 
 If your issue appears to be a bug, and hasn't been reported, open a new issue.
@@ -91,7 +71,7 @@ chances of your issue being dealt with quickly:
 
 **If you get help, help others. Good karma rulez!**
 
-### Submitting a Pull Request
+### <a name="submit-prr"></a> Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
 * Search [GitHub pulls](https://github.com/CodeCorico/allons-y/pulls) for an open or closed Pull Request
@@ -206,11 +186,11 @@ The subject contains succinct description of the change:
 * don't capitalize first letter
 * no dot (.) at the end
 
-###Body
+### Body
 Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes"
 The body should include the motivation for the change and contrast this with previous behavior.
 
-###Footer
+### Footer
 The footer should contain any information about **Breaking Changes** and is also the place to
 reference GitHub issues that this commit **Closes**.
 
@@ -223,11 +203,12 @@ Publish the new version:
 * Define the new version number (format MAJOR.MINOR.REVISION)
 * Update the `package.json` version
 * Update the `CHANGELOG.md` file with the new changes
-* Commit these changes with `chore(*): update version to 0.0.0`
+* Commit these changes with `release: 0.0.0`
 * Create a new tag on this commit named `[new version number]` (format: 0.0.0)
 * Push the branch
 * Push the new tag release with ```git push --tags```
+* Publish on NPM with ```npm publish```
 
 ## <a name="infos"></a> Further Info
 
-Inspired file from https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md
+Largely inspired file from https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md
