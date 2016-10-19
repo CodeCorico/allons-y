@@ -2,11 +2,17 @@
 
 var glob = require('glob'),
     async = require('async'),
-    path = require('path');
+    path = require('path'),
+    fs = require('fs-extra');
 
 module.exports = function() {
 
-  var _this = this;
+  var _this = this,
+      _extraModulesPathsFile = '.paths',
+      _extraModulesPaths = fs.existsSync(_extraModulesPathsFile) ? fs.readFileSync(_extraModulesPathsFile, 'utf-8') : '';
+
+  _extraModulesPaths = _extraModulesPaths.split('\n');
+  _extraModulesPaths = _extraModulesPaths.length == 1 && !_extraModulesPaths[0] ? [] : _extraModulesPaths;
 
   function _sortByFilePriority(a, b) {
     a = a.split('/').pop();
@@ -42,10 +48,17 @@ module.exports = function() {
   });
 
   this.globPatterns = function(pattern) {
-    return [
-      './node_modules/allons-y*/features/*/' + pattern,
-      './features/*/' + pattern
-    ];
+    var patterns = ['./node_modules/allons-y*/features/*/' + pattern];
+
+    if (_extraModulesPaths.length) {
+      _extraModulesPaths.forEach(function(extraModule) {
+        patterns.push(extraModule + '/features/*/' + pattern);
+      });
+    }
+
+    patterns.push('./features/*/' + pattern);
+
+    return patterns;
   };
 
   this.globSortered = function(patterns, callback) {
