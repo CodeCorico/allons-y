@@ -1,26 +1,22 @@
 {
   "name": "allons-y",
-  "version": "0.2.1",
-  "description": "Allons-y is a webapps platform installer that come from a S.F. movie.",
-  "main": "index.js",
-  "scripts": {
-    "postinstall": "node scripts/postinstall.js"
-  },
+  "version": "1.0.0",
+  "description": "Allons-y is a simple skeleton to package nodejs modules by feature.",
+  "license": "MIT",
+  "homepage": "http://allons-y.io",
+  "author": "CodeCorico <hello@codecorico.com>",
+  "bugs": "https://github.com/CodeCorico/allons-y/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/CodeCorico/allons-y.git"
   },
-  "keywords": [
-    "webapps",
-    "platform",
-    "patterns",
-    "architecture"
-  ],
-  "author": "CodeCorico <hello@codecorico.com>",
-  "bugs": {
-    "url": "https://github.com/CodeCorico/allons-y/issues"
+  "engines": {
+    "node": ">=4.1",
+    "npm": ">=3.2"
   },
-  "homepage": "https://github.com/CodeCorico/allons-y",
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
   "dependencies": {
     "async": "~2.0.1",
     "chokidar": "^1.6.0",
@@ -35,10 +31,5 @@
     "jsonfile": "~2.3.1",
     "mvw-injection": "~0.2.5",
     "node-uuid": "^1.4.7"
-  },
-  "engines": {
-    "node": ">=4.1",
-    "npm": ">=3.2"
-  },
-  "license": "MIT"
+  }
 }
