@@ -4,12 +4,13 @@
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/issue)](http://issuestats.com/github/codecorico/allons-y)
 [![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/pr)](http://issuestats.com/github/codecorico/allons-y)
 [![npm version](https://badge.fury.io/js/allons-y.svg)](https://badge.fury.io/js/allons-y)
+[![Stories in Ready](https://badge.waffle.io/CodeCorico/allons-y.png?label=ready&title=Ready)](https://waffle.io/CodeCorico/allons-y)
 
 Allons-y is a simple skeleton to package nodejs modules by feature.
 
 ## Wiki
 
-The documentation, wiki and every Allons-y resource can be found in the [Allons-y.io platform](http://allons-y.io).
+The documentation, wiki and every Allons-y resources can be found in the [Allons-y.io platform](http://allons-y.io).
 
 ## Want to help?
 
