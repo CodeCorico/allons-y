@@ -453,6 +453,7 @@ module.exports = function() {
                 forever.start(startModule.spawnCommands, {
                   max: startModule.spawnMaxRestarts,
                   silent: true,
+                  checkFile: false,
                   stdio: ['pipe', 'pipe', 'pipe', 'ipc']
                 })
             };
