@@ -17,6 +17,9 @@
   "scripts": {
     "postinstall": "node scripts/postinstall.js"
   },
+  "devDependencies": {
+    "allons-y-dev-chore": "^1.0.0"
+  },
   "dependencies": {
     "async": "~2.0.1",
     "chokidar": "^1.6.0",
