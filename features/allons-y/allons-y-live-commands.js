@@ -133,7 +133,7 @@ module.exports = function() {
     _this.output = function() {
       _output('\x1b[2K');
 
-      for (var i = 0; i < _workings.length + 1 + (_workings.length ? 3 : 0); i++) {
+      for (var i = 0; i < _workings.length + 1 + (_workings.length ? 5 : 0); i++) {
         _output('\x1b[1A\x1b[2K');
       }
       _output('\r');
@@ -148,7 +148,7 @@ module.exports = function() {
 
             _workingsObj[id] = line.replace('[working:' + id + ']', '');
             _workings = Object.keys(_workingsObj).map(function(key) {
-              return _workingsObj[key] + '\n';
+              return '█ ' + _workingsObj[key] + '\n';
             });
 
             return false;
@@ -173,11 +173,13 @@ module.exports = function() {
       _output(text);
 
       if (_workings.length) {
-        _output('\n▄▄▄▄ Working\n\n');
+        _output('\n▄▄▄▄ Working ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n█\n');
 
         _workings.forEach(function(line) {
           _output(line);
         });
+
+        _output('█\n█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n');
       }
 
       _output('\n');
