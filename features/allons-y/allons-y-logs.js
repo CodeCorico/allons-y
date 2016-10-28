@@ -45,10 +45,14 @@ module.exports = function() {
         (process.env.ALLONSY_LOGS_OUTPUT == 'warn' && (log.type == this.LOG_TYPE.ERROR || log.type == this.LOG_TYPE.WARNING))
       )
     ) {
-      _this.output('[' + _logDate(log.date) + '] [' + log.type.toUpperCase() + '] [' + log.namespace + '] ' + log.log);
+      _this[
+        log.type == this.LOG_TYPE.WARNING ? 'outputWarning' : (
+          log.type == this.LOG_TYPE.ERROR ? 'outputError' : 'outputInfo'
+        )
+      ]('[' + _logDate(log.date) + '] [' + log.type.toUpperCase() + '] [' + log.namespace + '] ' + log.log);
 
       if (log.args && log.args.error) {
-        _this.output(log.args.error);
+        _this.output(log.args.error, '\n');
       }
     }
 
