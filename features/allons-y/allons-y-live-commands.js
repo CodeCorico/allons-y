@@ -94,12 +94,12 @@ module.exports = function() {
 
   function _prompt(rl) {
     if (process.stdout.write('')) {
-      rl.setPrompt(clc.blackBright(_prefix), _prefix.length);
+      rl.setPrompt(_prefix, _prefix.length);
       rl.prompt();
     }
     else {
       process.stdout.on('drain', function() {
-        rl.setPrompt(clc.blackBright(_prefix), _prefix.length);
+        rl.setPrompt(_prefix, _prefix.length);
         rl.prompt();
       });
     }
