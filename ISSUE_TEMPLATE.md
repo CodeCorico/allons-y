@@ -25,7 +25,7 @@ https://plnkr.co or similar.
 **What are the allons-y-* modules are you using?**
 <!-- allons-y 1.X, allons-y-gulp 1.X, allons-y-express 1.X, etc -->
 
-* **Browser:**
+**Browser/Server:**
 <!-- All browsers where this could be reproduced -->
 
-* **Node:** `node --version` =
+**Node:** `node --version` =
