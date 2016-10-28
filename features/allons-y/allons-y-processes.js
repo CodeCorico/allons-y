@@ -255,13 +255,16 @@ module.exports = function() {
     }
 
     found.processes.forEach(function(p) {
+      // Kill doesn't works on Linux without this
+      p.forever.killTree = false;
+
+      if (p.watcher) {
+        p.watcher.stop();
+      }
       if (p.forever) {
         _this.log('allons-y', 'processes-stop:' + p.id + ',' + p.name);
 
         p.forever.stop();
-      }
-      if (p.watcher) {
-        p.watcher.stop();
       }
     });
 
@@ -276,13 +279,16 @@ module.exports = function() {
 
       if (child.processes && child.processes.length) {
         for (var j = 0; j < child.processes.length; j++) {
+          // Kill doesn't works on Linux without this
+          child.processes[j].forever.killTree = false;
+
+          if (child.processes[j].watcher) {
+            child.processes[j].watcher.stop();
+          }
           if (child.processes[j].forever) {
             _this.log('allons-y', 'processes-stop:' + child.processes[j].id + ',' + child.processes[j].name);
 
             child.processes[j].forever.stop();
-          }
-          if (child.processes[j].watcher) {
-            child.processes[j].watcher.stop();
           }
         }
       }
@@ -435,6 +441,13 @@ module.exports = function() {
             _this.log('allons-y', 'processes-' + child.type + '-start:' + pId + ',' + child.name);
 
             _this.outputInfo('► Starting "' + child.name + '" (' + child.type + ')' + (count > 1 ? ' [' + (i + 1) + '/' + count + ']' : ''));
+
+            if (
+              !startModule.fork && process.platform == 'win32' &&
+              startModule.spawnCommands.length && startModule.spawnCommands[0].indexOf('"') !== 0
+            ) {
+              startModule.spawnCommands[0] = '"' + startModule.spawnCommands[0] + '"';
+            }
 
             var p = {
               name: child.name,
