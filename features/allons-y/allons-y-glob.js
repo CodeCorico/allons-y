@@ -52,6 +52,10 @@ module.exports = function() {
 
     if (_extraModulesPaths.length) {
       _extraModulesPaths.forEach(function(extraModule) {
+        if (!extraModule) {
+          return;
+        }
+
         patterns.push(extraModule + '/features/*/' + pattern);
       });
     }
