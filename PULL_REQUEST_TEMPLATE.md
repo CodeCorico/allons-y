@@ -3,7 +3,7 @@
 - [ ] Docs have been added / updated to the [Wiki](https://allons-y.io/wiki)
 
 
-**What kind of change does this PR introduce?** (check one with "x")
+**What kind of change does this PR introduce?** <!-- check one with "x" -->
 ```
 [ ] Bugfix
 [ ] Feature
