@@ -133,7 +133,7 @@ module.exports = function() {
     _this.output = function() {
       _output('\x1b[2K');
 
-      for (var i = 0; i < _workings.length + 1 + (_workings.length ? 5 : 0); i++) {
+      for (var i = 0; i < _workings.length + 1 + (_workings.length ? 4 : 0); i++) {
         _output('\x1b[1A\x1b[2K');
       }
       _output('\r');
@@ -179,7 +179,7 @@ module.exports = function() {
           _output(line);
         });
 
-        _output('█\n█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n');
+        _output('█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n');
       }
 
       _output('\n');
