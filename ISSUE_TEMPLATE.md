@@ -22,7 +22,7 @@ https://plnkr.co or similar.
 **What is the motivation / use case for changing the behavior?**
 <!-- Describe the motivation or the concrete use case -->
 
-**What are the allons-y-* modules are you using?**
+**What are the allons-y modules are you using?**
 <!-- allons-y 1.X, allons-y-gulp 1.X, allons-y-express 1.X, etc -->
 
 **Browser/Server:**

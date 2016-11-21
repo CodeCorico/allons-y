@@ -3,8 +3,6 @@
 # Allons-y
 
 [![Join the chat at https://gitter.im/CodeCorico/allons-y](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CodeCorico/allons-y?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/issue)](http://issuestats.com/github/codecorico/allons-y)
-[![Issue Stats](http://issuestats.com/github/codecorico/allons-y/badge/pr)](http://issuestats.com/github/codecorico/allons-y)
 [![npm version](https://badge.fury.io/js/allons-y.svg)](https://badge.fury.io/js/allons-y)
 [![Stories in Ready](https://badge.waffle.io/CodeCorico/allons-y.png?label=ready&title=Ready)](https://waffle.io/CodeCorico/allons-y)
 
