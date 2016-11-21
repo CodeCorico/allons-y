@@ -1,3 +1,10 @@
+<a name="1.0.3"></a>
+# [1.0.3](https://github.com/CodeCorico/allons-y/compare/1.0.2...1.0.3) (2016-11-21)
+
+### Bug Fixes
+* **allons-y glob:** don't keep an empty extra module [#67acb3d](https://github.com/CodeCorico/allons-y/commit/67acb3d)
+* **allons-y live commands:** remove useless extra line to the working section [#2d304d8](https://github.com/CodeCorico/allons-y/commit/2d304d8)
+
 <a name="1.0.2"></a>
 # [1.0.2](https://github.com/CodeCorico/allons-y/compare/1.0.1...1.0.2) (2016-10-28)
 
