@@ -2,8 +2,7 @@
 
 module.exports = function() {
 
-  var clc = require('cli-color'),
-      readline = require('readline'),
+  var readline = require('readline'),
       util = require('util'),
       _this = this,
       _commands = {},
