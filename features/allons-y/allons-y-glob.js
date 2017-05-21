@@ -8,7 +8,7 @@ var glob = require('glob'),
 module.exports = function() {
 
   var _this = this,
-      _extraModulesPathsFile = '.paths',
+      _extraModulesPathsFile = '.allons-y-paths',
       _extraModulesPaths = fs.existsSync(_extraModulesPathsFile) ? fs.readFileSync(_extraModulesPathsFile, 'utf-8') : '';
 
   _extraModulesPaths = _extraModulesPaths.split('\n');
