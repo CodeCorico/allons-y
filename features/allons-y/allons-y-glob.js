@@ -112,7 +112,24 @@ module.exports = function() {
       }
     });
 
-    files.sort(_sortByFilePriority);
+    var filesAlreadyFound = {};
+
+    files = files
+      .filter(function(file) {
+        file = file.split('/');
+        if (file.length > 1) {
+          var testFile = file.pop() + '/' + file.pop();
+
+          if (filesAlreadyFound[testFile]) {
+            return false;
+          }
+
+          filesAlreadyFound[testFile] = true;
+        }
+
+        return true;
+      })
+      .sort(_sortByFilePriority);
 
     return files;
   };
