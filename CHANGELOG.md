@@ -1,3 +1,21 @@
+<a name="1.0.4"></a>
+# [1.0.4](https://github.com/CodeCorico/allons-y/compare/1.0.3...1.0.4) (2017-06-09)
+
+### Features
+* **allons-y glob:** add the .allons-y-paths-dev file to include extra patterns [#0dbf4b2](https://github.com/CodeCorico/allons-y/commit/0dbf4b2)
+
+### Bug Fixes
+* **allons-y glob:** change the .paths file to .allons-y-paths [#74051a3](https://github.com/CodeCorico/allons-y/commit/74051a3)
+* **allons-y glob:** remove duplicate includes [#8f5e49f](https://github.com/CodeCorico/allons-y/commit/8f5e49f)
+
+### Code Refactoring
+* **allons-y live commands:** remove useless cli-color [#5995958](https://github.com/CodeCorico/allons-y/commit/5995958)
+
+### Documentation
+* **readme:** start the documentation [#6c3e9cf](https://github.com/CodeCorico/allons-y/commit/6c3e9cf)
+* **principles:** add the principles documentation [#0ae67dd](https://github.com/CodeCorico/allons-y/commit/0ae67dd)
+* **architecture:** add the principles architecture [#c5f5530](https://github.com/CodeCorico/allons-y/commit/c5f5530)
+
 <a name="1.0.3"></a>
 # [1.0.3](https://github.com/CodeCorico/allons-y/compare/1.0.2...1.0.3) (2016-11-21)
 
