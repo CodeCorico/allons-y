@@ -8,11 +8,13 @@ var glob = require('glob'),
 module.exports = function() {
 
   var _this = this,
-      _extraModulesPathsFile = '.allons-y-paths',
-      _extraModulesPaths = fs.existsSync(_extraModulesPathsFile) ? fs.readFileSync(_extraModulesPathsFile, 'utf-8') : '';
+      _extraModulesPaths = '';
+
+  ['.allons-y-paths', '.allons-y-paths-dev'].forEach(function(fileName) {
+    _extraModulesPaths += '\n' + (fs.existsSync(fileName) ? fs.readFileSync(fileName, 'utf-8') : '');
+  });
 
   _extraModulesPaths = _extraModulesPaths.split('\n');
-  _extraModulesPaths = _extraModulesPaths.length == 1 && !_extraModulesPaths[0] ? [] : _extraModulesPaths;
 
   function _sortByFilePriority(a, b) {
     a = a.split('/').pop();
